@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/dist/styles/reset.css">
+        <link rel="stylesheet" href="/dist/styles/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    </head>
+    <body>
+        <header>
+            <div id="header">   
+
+            </div>
+        </header>
+        <main>
+            <div id="sidebar" >
+                <div id="inboxIcon" class="sideBarDiv">
+                <i class="fas fa-inbox sideBarIcon"></i>
+                </div> 
+                <div id="todayIcon" class="sideBarDiv">
+                    <i class="fas fa-calendar-day sideBarIcon"></i>
+                </div>
+                <div id="weekIcon" class="sideBarDiv">
+                    <i class="fas fa-calendar-alt sideBarIcon"></i>
+                </div>
+                <div id="projectIcon" class="sideBarDiv">
+                <i class="fas fa-list-ul sideBarIcon"></i>
+                </div>
+            </div>
+
+            <div id="content">
+                <div class ="listTitle">
+                    <h2> This is the Title</h2>
+                </div>
+                <div id="list">
+            
+                </div>
+                <div class="addTask" id="addTaskBtn">
+                    <i class="fas fa-plus plusSign"></i><h4>Add a Task</h4>
+                </div>
+
+                <div id="addTaskInput">
+                    
+                    <div class="mainInputs">
+                        <input type="text" id="taskTextInput" placeholder="Task">
+                        <div id="calenderIcon" class="ContentIconDiv"><i class="far fa-calendar "></i></div>
+                    </div>
+                    <div class="secondaryInputs">
+                        <div id="projectInputIcon" class="ContentIconDiv">
+                            <i class="far fa-flag"></i>
+                        </div>
+                        <div id="timeInputIcon" class="ContentIconDiv">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div id="priorityInputIcon" class="ContentIconDiv">
+                            <i class="far fa-star" id="star1"></i>
+                            <i class="far fa-star" id="star2"></i>
+                            <i class="far fa-star" id="star3"></i>
+                        </div>
+                    </div>
+                    <div class="inputButtonDiv">
+                        <button id="createTaskBtn" class="inputButton">Add Task</button>
+                        <button id="cancelAddTaskBtn" class="inputButton">Cancel</button>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+        </main>
+        <footer>
+
+        </footer>
+
+    </body>
+    <script type="module" src="/src/index.js"></script>
+</html>
