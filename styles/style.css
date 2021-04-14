@@ -139,6 +139,10 @@ main {
     font-size:20px;
 }
 
+#taskCancelButton {
+    margin-left: auto;
+}
+
 .addTask {
     font-weight: bold;
     padding-top:20px;
