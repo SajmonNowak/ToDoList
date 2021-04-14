@@ -40,7 +40,12 @@ export default class Coordinator {
         return new Task (taskInputValue);
     }
     
-
+    static deleteTask(){
+        const task = this.parentNode.querySelector('p').textContent;
+        const project = 'inbox'; 
+        Storage.deleteTask(project, task);
+        UI.showProject(project);
+    }
 
     
     

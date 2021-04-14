@@ -54,9 +54,10 @@ export default class UI {
         
         const circle = UI.createCheckCircle();
         const taskContent = UI.createTaskContent(task);
+        const deleteButton = UI.createDeleteButton(task);
         const div = document.createElement('div');
         div.classList.add('task');
-        div.append(circle,taskContent);
+        div.append(circle,taskContent, deleteButton);
 
         return div;
          
@@ -70,9 +71,18 @@ export default class UI {
     static createCheckCircle(){
         const circle = document.createElement('i');
         circle.classList.add('far', 'fa-circle');
-        circle.id = 'taskCheckCircle';
+        const circleDiv = UI.embedInDiv(circle, 'taskCheckCircle');
 
-        return circle;
+        return circleDiv;
+    }
+
+    static createDeleteButton (task) {
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fas', 'fa-times');
+        const deleteBtn = UI.embedInDiv(deleteIcon, 'taskCancelButton');
+        deleteBtn.addEventListener('click', Coordinator.deleteTask);
+
+        return deleteBtn;
     }
 
     static createTaskContent(task){
@@ -85,5 +95,15 @@ export default class UI {
     static resetList() {
         const listContent = document.getElementById('list');
         listContent.innerHTML = '';
+    }
+
+    // Help Functions
+
+    static embedInDiv (element, id) {
+        const div = document.createElement('div');
+        div.id = id;
+        div.appendChild(element);
+
+        return div;
     }
 }

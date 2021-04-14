@@ -37,4 +37,10 @@ export default class Storage {
         projectList.getProject(project).addTask(task);
         Storage.saveProjectList(projectList);
     }
+
+    static deleteTask (project, taskTitle) {
+        const projectList = Storage.getProjectList();
+        projectList.getProject(project).deleteTask(taskTitle);
+        Storage.saveProjectList(projectList);
+    }
 }
