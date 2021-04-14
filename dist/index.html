@@ -12,6 +12,9 @@
             </div>
         </header>
         <main>
+
+            <!-- SideBar-->
+
             <div id="sidebar" >
                 <div id="inboxIcon" class="sideBarDiv">
                 <i class="fas fa-inbox sideBarIcon"></i>
@@ -27,7 +30,8 @@
                 </div>
             </div>
 
-            <div id="content">
+            <!-- ToDo List Layout-->
+            <div id="toDoLayoutDiv">
                 <div class ="listTitle">
                     <h2> This is the Title</h2>
                 </div>
@@ -35,18 +39,18 @@
             
                 </div>
                 <div class="addTask" id="addTaskBtn">
-                    <i class="fas fa-plus plusSign"></i><h4>Add a Task</h4>
+                    <i class="fas fa-plus plusSign"></i><h4>Add Task</h4>
                 </div>
 
+                <!--Add Task Popup-->
                 <div id="addTaskInput">
-                    
                     <div class="mainInputs">
                         <input type="text" id="taskTextInput" placeholder="Task">
                         <div id="calenderIcon" class="ContentIconDiv"><i class="far fa-calendar "></i></div>
                     </div>
                     <div class="secondaryInputs">
                         <div id="projectInputIcon" class="ContentIconDiv">
-                            <i class="far fa-flag"></i>
+                            <i class="fas fa-list-ul"></i>
                         </div>
                         <div id="timeInputIcon" class="ContentIconDiv">
                             <i class="far fa-clock"></i>
@@ -61,11 +65,31 @@
                         <button id="createTaskBtn" class="inputButton">Add Task</button>
                         <button id="cancelAddTaskBtn" class="inputButton">Cancel</button>
                     </div>
-                    
                 </div>
-
             </div>
-            
+
+            <!-- ProjectList layout-->
+            <div id="projectLayoutDiv">
+                <div class="projectListTitle">
+                    <h2>Your Projects</h2>
+                </div>
+                <div id="projectListDiv">
+                </div>
+                <div>
+                    <button id="addProjectButton"> <i class="fas fa-plus plusSign"></i><h4>Add Project</h4></button>
+                </div>
+                 <!-- Add Project PopUp-->
+                <div id="addProjectPopup">
+                    <div id="projectNameInputDiv">
+                        <input type="text" placeholder="Project" id="projectNameInput"> 
+                    </div>
+                    <div>
+                        <button id="createProjectBtn">Create Project</button>
+                        <button id="cancelAddProjectBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
         </main>
         <footer>
 

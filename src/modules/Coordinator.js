@@ -8,6 +8,7 @@ export default class Coordinator {
 
     static loadPage(){
         UI.initialiseButtons();
+        UI.changeLayout('toDoList');
         UI.showProject('inbox');
     }
     
@@ -47,7 +48,14 @@ export default class Coordinator {
         UI.showProject(project);
     }
 
+    static addProjectToSystem () {
+        const project = Coordinator.createNewProject(UI.copyInputProjectInformation());
+        UI.closePopup();
+        Storage.addProject(project);
+        UI.showProjectList();
+    }
     
-    
-   
+   static createNewProject(name) {
+        return new Project (name);
+   }
 }

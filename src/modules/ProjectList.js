@@ -19,4 +19,8 @@ export default class ProjectList {
             project => project.getName() == projectName
         );
     }
+
+    addProject(project){
+        this._projects.push(project);
+    }
 }

@@ -8,14 +8,22 @@ export default class UI {
         const addTaskButton = document.getElementById('addTaskBtn');
         const cancelAddTaskButton = document.getElementById('cancelAddTaskBtn')
         const createTaskButton = document.getElementById('createTaskBtn')
-        const inboxButton = document.getElementById ('inboxIcon');
-        const todayButton = document.getElementById ('todayIcon');
-        const weekButton = document.getElementById ('weekIcon');
+        const inboxButton = document.getElementById('inboxIcon');
+        const todayButton = document.getElementById('todayIcon');
+        const weekButton = document.getElementById('weekIcon');
         const projectButton = document.getElementById('projectIcon');
+        const addProjectButton = document.getElementById('addProjectButton');
+        const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
+        const createProjectButton = document.getElementById('createProjectBtn');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
         createTaskButton.addEventListener('click', Coordinator.createTask);
+        inboxButton.addEventListener('click', UI.openToDoList);
+        projectButton.addEventListener('click', UI.openProjectPage);
+        addProjectButton.addEventListener('click', UI.openAddProjectPopup);
+        cancelAddProjectButton.addEventListener('click', UI.closePopup);
+        createProjectButton.addEventListener('click', Coordinator.addProjectToSystem);
 
     }
 
@@ -34,11 +42,10 @@ export default class UI {
 
     static copyInputInformation () {
         const taskInputValue = document.getElementById('taskTextInput').value;
-        console.log(taskInputValue)
         return taskInputValue;
     }
 
-    // Display Project
+    // Display selected Project
 
     static showProject (project) {
         UI.resetList();
@@ -97,6 +104,91 @@ export default class UI {
         listContent.innerHTML = '';
     }
 
+    // Display Projects
+
+    static openToDoList() {
+        UI.changeLayout('toDoList');
+        UI.showProject('inbox');
+    }
+
+    static openProjectPage() {
+        UI.changeLayout('projectList');
+        UI.showProjectList();
+
+    }
+
+    static showProjectList(){
+        UI.clearProjectList();
+        const projects = Storage.getProjectList().getProjects();
+        const projectListDiv = document.getElementById('projectListDiv');
+        for(let i=0; i<projects.length ; i++){
+            const projectDiv = UI.createProjectDiv(projects[i]);
+            projectDiv.classList.add('projectDiv');
+            projectListDiv.appendChild(projectDiv);
+        }
+    }
+
+    static createProjectDiv (project) {
+        const projectTitle = document.createElement('p');
+        projectTitle.textContent = project.getName();
+        const projectDiv = UI.embedInDiv(projectTitle);
+        projectDiv.addEventListener('click', UI.openProject)
+
+        return projectDiv;
+    }
+
+    static openAddProjectPopup() {
+        const popup = document.getElementById('addProjectPopup');
+        popup.classList.add('activePopup'); 
+    }
+
+    static closePopup() {
+        const popup = document.getElementById('addProjectPopup');
+        popup.classList.remove('activePopup'); 
+    }
+
+    static copyInputProjectInformation() {
+        const input = document.getElementById('projectNameInput').value;
+
+        return input;
+    }
+
+    static clearProjectList() {
+        const list = document.getElementById('projectListDiv');
+        list.textContent = '';
+    }
+
+    static openProject() {
+        console.log(this.querySelector('p'));
+        UI.changeLayout('toDoList');
+        UI.showProject(this.querySelector('p').textContent);
+    }
+    // Layout 
+
+    static changeLayout(layout) {
+        const activeLayout = document.querySelectorAll('.activeLayout');
+        activeLayout.forEach(div => div.classList.remove('activeLayout'));
+        switch (layout){
+            case 'toDoList':
+                UI.showToDoListLayout();
+                break;
+            case 'projectList':
+                UI.showProjectListLayout();
+                break;
+        }
+    }
+
+    static showToDoListLayout() {
+        const toDoLayoutDiv = document.getElementById('toDoLayoutDiv');
+        toDoLayoutDiv.classList.add('activeLayout');
+    
+    
+    }
+
+    static showProjectListLayout (){
+        const projectLayoutDiv = document.getElementById('projectLayoutDiv');
+        projectLayoutDiv.classList.add('activeLayout');
+    }
     // Help Functions
 
     static embedInDiv (element, id) {

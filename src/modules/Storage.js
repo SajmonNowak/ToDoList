@@ -7,7 +7,6 @@ export default class Storage {
 
     static getProjectList (){
 
-        console.log(JSON.parse(localStorage.getItem('savedList')));
         const projectList = Object.assign(
             new ProjectList(), JSON.parse(localStorage.getItem('savedList'))
         );
@@ -41,6 +40,12 @@ export default class Storage {
     static deleteTask (project, taskTitle) {
         const projectList = Storage.getProjectList();
         projectList.getProject(project).deleteTask(taskTitle);
+        Storage.saveProjectList(projectList);
+    }
+
+    static addProject (project){
+        const projectList = Storage.getProjectList();
+        projectList.addProject(project);
         Storage.saveProjectList(projectList);
     }
 }
