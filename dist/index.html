@@ -32,13 +32,13 @@
 
             <!-- ToDo List Layout-->
             <div id="toDoLayoutDiv">
-                <div class ="listTitle">
-                    <h2> This is the Title</h2>
+                <div class ="listTitleDiv">
+                    <h2 id="listTitle"> This is the Title</h2>
                 </div>
                 <div id="list">
             
                 </div>
-                <div class="addTask" id="addTaskBtn">
+                <div class="addTask addButton" id="addTaskBtn">
                     <i class="fas fa-plus plusSign"></i><h4>Add Task</h4>
                 </div>
 
@@ -75,17 +75,18 @@
                 </div>
                 <div id="projectListDiv">
                 </div>
-                <div>
+                
                     <button id="addProjectButton"> <i class="fas fa-plus plusSign"></i><h4>Add Project</h4></button>
-                </div>
+                
                  <!-- Add Project PopUp-->
                 <div id="addProjectPopup">
-                    <div id="projectNameInputDiv">
+                    <h4>Add a new Project</h4>
+                    <div class="projectNameInputDiv">
                         <input type="text" placeholder="Project" id="projectNameInput"> 
                     </div>
-                    <div>
-                        <button id="createProjectBtn">Create Project</button>
-                        <button id="cancelAddProjectBtn">Cancel</button>
+                    <div class="addProjectButtons">
+                        <button id="createProjectBtn" class="inputButton">Add</button>
+                        <button id="cancelAddProjectBtn" class="inputButton">Cancel</button>
                     </div>
                 </div>
             </div>

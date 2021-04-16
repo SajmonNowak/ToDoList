@@ -8,18 +8,13 @@ export default class Coordinator {
 
     static loadPage(){
         UI.initialiseButtons();
-        UI.changeLayout('toDoList');
-        UI.showProject('inbox');
+        // UI.changeLayout('toDoList');
+        Coordinator.initialiseProjects();
+        UI.showProject('Inbox');
     }
     
-    static initialiseFirstStart () {
-        const projectList = new ProjectList();
-        Coordinator.createInputExamples(projectList);
-        Storage.saveToDoList(projectList);
-    }
-
     static createInputExamples(projectList){
-        const inbox = projectList.getProject('inbox');
+        const inbox = projectList.getProject('Inbox');
         
         inbox.setTasks(
             [
@@ -30,11 +25,21 @@ export default class Coordinator {
         )
     }
 
+    static initialiseProjects() {
+        if (localStorage.length == 0){
+        const projectList = new ProjectList();
+        Coordinator.createInputExamples(projectList);
+        Storage.saveProjectList(projectList);
+        }
+    }
+
     static createTask() {
         const task = Coordinator.createNewTask(UI.copyInputInformation());
+        const projectName = this.closest('#toDoLayoutDiv').querySelector('#listTitle').textContent;
+        
         UI.closeAddTaskPopup();
-        Storage.addTask('inbox', task);
-        UI.showProject('inbox');
+        Storage.addTask(projectName, task);
+        UI.showToDoList(projectName);
     }
 
     static createNewTask(taskInputValue) {
@@ -43,19 +48,21 @@ export default class Coordinator {
     
     static deleteTask(){
         const task = this.parentNode.querySelector('p').textContent;
-        const project = 'inbox'; 
-        Storage.deleteTask(project, task);
-        UI.showProject(project);
+        const projectName = this.closest('main').querySelector('#listTitle').textContent;
+        Storage.deleteTask(projectName, task);
+        UI.showProject(projectName);
     }
 
-    static addProjectToSystem () {
+    static handleCreateProjectButton () {
         const project = Coordinator.createNewProject(UI.copyInputProjectInformation());
         UI.closePopup();
-        Storage.addProject(project);
-        UI.showProjectList();
+        UI.showAllProjects();
     }
     
    static createNewProject(name) {
-        return new Project (name);
+        const project = new Project (name);
+        Storage.addProject(project);
+        return project;
+
    }
 }

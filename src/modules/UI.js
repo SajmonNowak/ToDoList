@@ -19,11 +19,11 @@ export default class UI {
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
         createTaskButton.addEventListener('click', Coordinator.createTask);
-        inboxButton.addEventListener('click', UI.openToDoList);
+        inboxButton.addEventListener('click', UI.openInboxPage);
         projectButton.addEventListener('click', UI.openProjectPage);
         addProjectButton.addEventListener('click', UI.openAddProjectPopup);
         cancelAddProjectButton.addEventListener('click', UI.closePopup);
-        createProjectButton.addEventListener('click', Coordinator.addProjectToSystem);
+        createProjectButton.addEventListener('click', Coordinator.handleCreateProjectButton);
 
     }
 
@@ -47,15 +47,47 @@ export default class UI {
 
     // Display selected Project
 
+    static openInboxPage () {
+        UI.createToDoPage('Inbox');
+    }
+
+    static createToDoPage (projectName) {
+        UI.changeLayout('toDoList');
+        UI.changeProjectTitle(projectName);
+        UI.showToDoList(projectName);
+    }
+
+    static showToDoList(projectName){;
+        UI.resetList();
+        const projectToShow = Storage.getProjectList().getProject(projectName);
+    
+        for (let i=0; i< projectToShow.getTasks().length; i++){
+            const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
+            UI.displayTaskDiv(taskDiv);
+        }
+    }
+
+    static changeProjectTitle(project) {
+        const titleDiv = document.getElementById('listTitle');
+        titleDiv.textContent = project;
+    }
+
+    static getProjectName() {
+        const projectName = this.querySelector('p').textContent;
+
+        return projectName;
+    }
+
     static showProject (project) {
         UI.resetList();
+        UI.changeLayout('toDoList');
         const projectToShow = Storage.getProjectList().getProject(project);
         
         for (let i=0; i< projectToShow.getTasks().length; i++){
             const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
             UI.displayTaskDiv(taskDiv);
         }
-    }   
+    }
 
     static createTaskDivs(task) {
         
@@ -85,7 +117,7 @@ export default class UI {
 
     static createDeleteButton (task) {
         const deleteIcon = document.createElement('i');
-        deleteIcon.classList.add('fas', 'fa-times');
+        deleteIcon.classList.add('fas', 'fa-times', 'deleteIcon');
         const deleteBtn = UI.embedInDiv(deleteIcon, 'taskCancelButton');
         deleteBtn.addEventListener('click', Coordinator.deleteTask);
 
@@ -106,20 +138,16 @@ export default class UI {
 
     // Display Projects
 
-    static openToDoList() {
-        UI.changeLayout('toDoList');
-        UI.showProject('inbox');
-    }
-
     static openProjectPage() {
         UI.changeLayout('projectList');
-        UI.showProjectList();
+        UI.showAllProjects();
 
     }
 
-    static showProjectList(){
+    static showAllProjects(){
         UI.clearProjectList();
         const projects = Storage.getProjectList().getProjects();
+        console.log(projects);
         const projectListDiv = document.getElementById('projectListDiv');
         for(let i=0; i<projects.length ; i++){
             const projectDiv = UI.createProjectDiv(projects[i]);
@@ -128,18 +156,28 @@ export default class UI {
         }
     }
 
+    static showProjectToDos () {
+        const projectName = this.querySelector('p').textContent;
+        UI.createToDoPage(projectName);
+    }
+
     static createProjectDiv (project) {
         const projectTitle = document.createElement('p');
         projectTitle.textContent = project.getName();
         const projectDiv = UI.embedInDiv(projectTitle);
-        projectDiv.addEventListener('click', UI.openProject)
+        projectDiv.addEventListener('click', UI.showProjectToDos)
 
         return projectDiv;
     }
 
     static openAddProjectPopup() {
         const popup = document.getElementById('addProjectPopup');
-        popup.classList.add('activePopup'); 
+        popup.classList.add('activePopup');
+        UI.hideAddProjectButton(this); 
+    }
+
+    static hideAddProjectButton(button){
+       
     }
 
     static closePopup() {
@@ -159,7 +197,6 @@ export default class UI {
     }
 
     static openProject() {
-        console.log(this.querySelector('p'));
         UI.changeLayout('toDoList');
         UI.showProject(this.querySelector('p').textContent);
     }
