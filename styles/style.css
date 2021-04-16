@@ -23,9 +23,12 @@
     -webkit-box-sizing: border-box;
 }
 
+body {
+    font-family: "Roboto";
+}
+
 p {
     font-size: 18px;
-    font-family: "Roboto";
 }
 
 h5 {
@@ -48,6 +51,10 @@ h2 {
 
 h1 {
     font-size: 48px;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Lato";
 }
 
 button {
@@ -73,6 +80,16 @@ button {
 
 .activePopup {
     display: flex !important;
+}
+
+.addButton {
+    display: flex;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondOrange) ;
+    padding: 10px;
+    margin-top: 5px; 
 }
 /* Header */
 
@@ -122,11 +139,11 @@ main {
     flex-direction: column;
     width: 100%;
     height: 100%;
-    padding: 0px 40px;
+    padding: 0px 20px;
 
 }
 
-.listTitle {
+.listTitleDiv {
     margin-top: 20px;
     margin-bottom: 20px;
 
@@ -135,8 +152,7 @@ main {
 .task {
     display: flex;
     font-size: 18px;
-    padding: 20px;
-    padding-left: 0px;
+    padding: 20px 0px;
     border-bottom : 1px solid;
     border-color: var(--borderGrey);
 }
@@ -148,17 +164,8 @@ main {
 
 #taskCancelButton {
     margin-left: auto;
-}
-
-.addTask {
-    font-weight: bold;
-    padding-top:20px;
-    display: flex;
-    align-items: center;
-}
-
-.addTask h4 {
-    font-size: 18px;
+    margin-right: 5px;
+    width: 20px;
 }
 
 .plusSign {
@@ -187,7 +194,6 @@ main {
     flex: 1;
     border: 1px solid;
     border-color: var(--borderGrey);
-
 }
 
 #calenderIcon {
@@ -229,18 +235,50 @@ main {
     width: 100%;
     display:none;
     flex-direction: column;
+    margin: 5px;
 }
 
 .projectDiv {
     display: flex;
     font-size: 18px;
-    margin: 2px;
     padding: 20px;
-    padding-left: 0px;
+    padding-left: 20px;
     border: 1px solid;
+}
+
+#addProjectButton{
+    display: flex;
+    border: none;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondOrange) ;
+    padding: 10px;
+    margin-top: 5px; 
 }
 
 #addProjectPopup {
     display: none;
     flex-direction: column;
+    margin-top: 10px;
+    width: 100%;
+}
+
+#addProjectPopup > h4 {
+    padding-bottom: 10px;
+}
+
+#projectNameInput {
+    height: 40px;
+    width: 100%;
+    border: 1px solid;
+    border-color: var(--borderGrey);
+}
+
+.addProjectButtons {
+    margin-top: 10px;
+    display: flex;
+}
+
+#createProjectBtn {
+    background-color: var(--secondOrange);
 }
