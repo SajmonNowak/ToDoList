@@ -1,5 +1,6 @@
 import Coordinator from "./Coordinator.js";
 import Storage from "./Storage.js";
+// import datepicker from 'js-datepicker';
 
 
 export default class UI {
@@ -15,43 +16,47 @@ export default class UI {
         const addProjectButton = document.getElementById('addProjectButton');
         const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
         const createProjectButton = document.getElementById('createProjectBtn');
+        const removeToDosButton = document.getElementById('removeToDosBtn');
+        const doneItemsButton = document.getElementById('doneIcon');
+        const calenderButton = document.getElementById('calenderIcon');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
         createTaskButton.addEventListener('click', Coordinator.createTask);
-        inboxButton.addEventListener('click', UI.openInboxPage);
+        inboxButton.addEventListener('click', UI.openInbox);
         projectButton.addEventListener('click', UI.openProjectPage);
         addProjectButton.addEventListener('click', UI.openAddProjectPopup);
-        cancelAddProjectButton.addEventListener('click', UI.closePopup);
+        cancelAddProjectButton.addEventListener('click', UI.closeProjectPopup);
         createProjectButton.addEventListener('click', Coordinator.handleCreateProjectButton);
+        removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems)
+        doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
+        calenderButton.addEventListener('click', UI.openCalenderBox)
 
+        window.addEventListener('click', () =>{
+            document.getElementById('context-menu').classList.remove('active');
+        })
     }
 
-    // Buttons 
-    static openAddTaskPopup () {
-        const addTaskPopup = document.getElementById('addTaskInput');
+    // ContextMenu
+
+    static openContextMenu (e){      
+        var contextElement = document.getElementById('context-menu');
+
+        let menuPosition = UI.getPosition(e);
+        // contextElement.style.top = e.offsetX + 'px';
+        // contextElement.style.left = e.offsetY + 'px';
+        contextElement.style.left = menuPosition.x + 'px';
+        contextElement.style.top = menuPosition.y +'px';
         
-        addTaskPopup.style.display = 'flex';
-    }
 
-    static closeAddTaskPopup () {
-        const addTaskPopup = document.getElementById('addTaskInput');
-
-        addTaskPopup.style.display = 'none';
-    }
-
-    static copyInputInformation () {
-        const taskInputValue = document.getElementById('taskTextInput').value;
-        return taskInputValue;
+        contextElement.classList.add('active');
     }
 
     // Display selected Project
 
-    static openInboxPage () {
-        UI.createToDoPage('Inbox');
-    }
+    
 
-    static createToDoPage (projectName) {
+    static showProject (projectName) {
         UI.changeLayout('toDoList');
         UI.changeProjectTitle(projectName);
         UI.showToDoList(projectName);
@@ -78,25 +83,19 @@ export default class UI {
         return projectName;
     }
 
-    static showProject (project) {
-        UI.resetList();
-        UI.changeLayout('toDoList');
-        const projectToShow = Storage.getProjectList().getProject(project);
-        
-        for (let i=0; i< projectToShow.getTasks().length; i++){
-            const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
-            UI.displayTaskDiv(taskDiv);
-        }
-    }
-
     static createTaskDivs(task) {
         
-        const circle = UI.createCheckCircle();
+        const circle = UI.createCircle();
         const taskContent = UI.createTaskContent(task);
         const deleteButton = UI.createDeleteButton(task);
         const div = document.createElement('div');
         div.classList.add('task');
         div.append(circle,taskContent, deleteButton);
+        div.addEventListener('click', Coordinator.handleClickOnTask);
+        div.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            UI.openContextMenu(e);
+        })
 
         return div;
          
@@ -107,7 +106,7 @@ export default class UI {
         listContent.appendChild(div);
     }
 
-    static createCheckCircle(){
+    static createCircle(){
         const circle = document.createElement('i');
         circle.classList.add('far', 'fa-circle');
         const circleDiv = UI.embedInDiv(circle, 'taskCheckCircle');
@@ -136,8 +135,78 @@ export default class UI {
         listContent.innerHTML = '';
     }
 
+    static openAddTaskPopup () {
+        const addTaskPopup = document.getElementById('addTaskPopup');
+        
+        addTaskPopup.style.display = 'flex';
+        document.getElementById('addTaskBtn').style.display = 'none';
+    }
+
+    static closeAddTaskPopup () {
+        const addTaskPopup = document.getElementById('addTaskPopup');
+
+        addTaskPopup.style.display = 'none';
+        document.getElementById('addTaskBtn').style.display = 'flex';
+        UI.deleteErrorMessage(addTaskPopup);
+    }
+
+
+    static copyTaskInputInformation () {
+        const taskInputValue = document.getElementById('taskTextInput').value;
+        return taskInputValue;
+    }
+
+    static showTaskError () {
+        const popUp = document.getElementById('addTaskPopup');
+        if (popUp.lastChild.id == 'errorMessageDiv'){
+            return;
+        }
+        const errorMessage = document.createElement('h4');
+        errorMessage.textContent = "Task needs a title";
+        let errorMessageDiv = UI.embedInDiv(errorMessage, 'errorMessageDiv');
+        popUp.appendChild(errorMessageDiv);
+    }
+
+    // Task options
+
+    static openCalenderBox () {
+        const picker = datepicker('.datepicker');
+    }
+
+    // Task finished
+
+    static markTaskFinished (taskDiv) {
+        taskDiv.classList.add('finished');
+        taskDiv.removeChild(taskDiv.querySelector('#taskCheckCircle'));
+        taskDiv.prepend(UI.createCheckedCircle());
+
+    }
+
+    static markNotFinished (taskDiv) {
+        taskDiv.classList.remove('finished');
+        taskDiv.removeChild(taskDiv.querySelector('#taskCheckCircle'));
+        taskDiv.prepend(UI.createCircle());
+    }
+
+    static createCheckedCircle(){
+        const checkedCircle = document.createElement('i');
+        checkedCircle.classList.add('far', 'fa-check-circle');
+        const circleDiv = UI.embedInDiv(checkedCircle, 'taskCheckCircle');
+
+        return circleDiv;
+    }
+
     // Display Projects
 
+    static openInbox(){
+        const project = 'Inbox';
+        UI.showProject(project);
+    }
+
+    static openDoneToDosPage() {
+        const project = "Done ToDo's";
+        UI.showProject(project);
+    }
     static openProjectPage() {
         UI.changeLayout('projectList');
         UI.showAllProjects();
@@ -147,7 +216,6 @@ export default class UI {
     static showAllProjects(){
         UI.clearProjectList();
         const projects = Storage.getProjectList().getProjects();
-        console.log(projects);
         const projectListDiv = document.getElementById('projectListDiv');
         for(let i=0; i<projects.length ; i++){
             const projectDiv = UI.createProjectDiv(projects[i]);
@@ -158,7 +226,7 @@ export default class UI {
 
     static showProjectToDos () {
         const projectName = this.querySelector('p').textContent;
-        UI.createToDoPage(projectName);
+        UI.showProject(projectName);
     }
 
     static createProjectDiv (project) {
@@ -166,6 +234,10 @@ export default class UI {
         projectTitle.textContent = project.getName();
         const projectDiv = UI.embedInDiv(projectTitle);
         projectDiv.addEventListener('click', UI.showProjectToDos)
+        projectDiv.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            UI.openContextMenu(e);
+        })
 
         return projectDiv;
     }
@@ -173,16 +245,15 @@ export default class UI {
     static openAddProjectPopup() {
         const popup = document.getElementById('addProjectPopup');
         popup.classList.add('activePopup');
-        UI.hideAddProjectButton(this); 
+        document.getElementById('addProjectButton').style.display = 'none';
     }
 
-    static hideAddProjectButton(button){
-       
-    }
 
-    static closePopup() {
+    static closeProjectPopup() {
         const popup = document.getElementById('addProjectPopup');
         popup.classList.remove('activePopup'); 
+        document.getElementById('addProjectButton').style.display = 'flex';
+        UI.deleteErrorMessage(popup);
     }
 
     static copyInputProjectInformation() {
@@ -198,7 +269,22 @@ export default class UI {
 
     static openProject() {
         UI.changeLayout('toDoList');
-        UI.showProject(this.querySelector('p').textContent);
+        UI.showToDoList(this.querySelector('p').textContent);
+    }
+
+    static showProjectError () {
+        const popUp = document.getElementById('addProjectPopup');
+        if (popUp.lastChild.id == 'errorMessageDiv'){
+            return;
+        }
+        const errorMessage = document.createElement('h4');
+        errorMessage.textContent = "Project needs a title";
+        let errorMessageDiv = UI.embedInDiv(errorMessage, 'errorMessageDiv');
+        popUp.appendChild(errorMessageDiv);
+    }
+
+    static deleteErrorMessage(element) {
+        element.removeChild(element.lastChild);
     }
     // Layout 
 
@@ -226,6 +312,7 @@ export default class UI {
         const projectLayoutDiv = document.getElementById('projectLayoutDiv');
         projectLayoutDiv.classList.add('activeLayout');
     }
+
     // Help Functions
 
     static embedInDiv (element, id) {
@@ -234,5 +321,25 @@ export default class UI {
         div.appendChild(element);
 
         return div;
+    }
+
+    static getPosition(e) {
+        let posx = 0;
+        let posy = 0;
+
+        if (e.pageX || e.pageY) {
+            posx = e.pageX;
+            posy = e.pageY;
+            } else if (e.clientX || e.clientY) {
+            posx = e.clientX + document.body.scrollLeft + 
+                                document.documentElement.scrollLeft;
+            posy = e.clientY + document.body.scrollTop + 
+                                document.documentElement.scrollTop;
+        }
+        
+        return {
+        x: posx,
+        y: posy
+        }
     }
 }

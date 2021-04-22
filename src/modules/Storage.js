@@ -31,15 +31,15 @@ export default class Storage {
         localStorage.setItem('savedList',JSON.stringify(list));
     }
 
-    static addTask (project, task) {
+    static addTask (projectName, task) {
         const projectList = Storage.getProjectList();
-        projectList.getProject(project).addTask(task);
+        projectList.getProject(projectName).addTask(task);
         Storage.saveProjectList(projectList);
     }
 
-    static deleteTask (project, taskTitle) {
+    static deleteTask (projectName, taskTitle) {
         const projectList = Storage.getProjectList();
-        projectList.getProject(project).deleteTask(taskTitle);
+        projectList.getProject(projectName).deleteTask(taskTitle);
         Storage.saveProjectList(projectList);
     }
 
