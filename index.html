@@ -12,6 +12,16 @@
             </div>
         </header>
         <main>
+            <!-- Context-Menu-->
+            <div id= "context-menu">
+                <div class="contextItem">
+                    <i class="far fa-edit"></i> Edit
+                </div>
+                <div class="contextItem">
+                    <i class="fa fa-trash-alt"></i> Delete
+                </div>
+
+            </div>
 
             <!-- SideBar-->
 
@@ -28,12 +38,16 @@
                 <div id="projectIcon" class="sideBarDiv">
                 <i class="fas fa-list-ul sideBarIcon"></i>
                 </div>
+                <div id="doneIcon" class="sideBarDiv bottomBarIcon">
+                    <i class="fas fa-flag sideBarIcon"></i>
+                    </div>
             </div>
 
             <!-- ToDo List Layout-->
             <div id="toDoLayoutDiv">
-                <div class ="listTitleDiv">
-                    <h2 id="listTitle"> This is the Title</h2>
+                <div class ="toDoTopMenu">
+                    <h2 id="listTitle">Inbox</h2>
+                    <button id="removeToDosBtn"> Shift done ToDo's </button>
                 </div>
                 <div id="list">
             
@@ -43,7 +57,7 @@
                 </div>
 
                 <!--Add Task Popup-->
-                <div id="addTaskInput">
+                <div id="addTaskPopup">
                     <div class="mainInputs">
                         <input type="text" id="taskTextInput" placeholder="Task">
                         <div id="calenderIcon" class="ContentIconDiv"><i class="far fa-calendar "></i></div>
@@ -83,6 +97,14 @@
                     <h4>Add a new Project</h4>
                     <div class="projectNameInputDiv">
                         <input type="text" placeholder="Project" id="projectNameInput"> 
+                    </div>
+                    <div>
+                        <select name ="color" id="colorOption">
+                            <option value="" disabled selected>Project color</option>
+                            <option value= "red">Red</option>
+                            <option value = "blue">Blue</option>
+                            <option value= "green"> Green </option>
+                        </select>
                     </div>
                     <div class="addProjectButtons">
                         <button id="createProjectBtn" class="inputButton">Add</button>

@@ -91,6 +91,33 @@ button {
     padding: 10px;
     margin-top: 5px; 
 }
+
+/* Context-Menu */
+
+#context-menu {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    border: 1px solid ;
+    z-index: 100;
+    width: 150px;
+    font-size: 18px;
+    background-color: var(--backgroundColor);
+}
+
+.contextItem {
+ display: flex;
+ padding: 10px;
+}
+
+.contextItem:hover {
+    background-color: var(--secondOrange) ;
+}
+
+.active {
+    display: flex !important;
+}
+
 /* Header */
 
 header {
@@ -116,7 +143,6 @@ main {
     background-color: var(--backgroundColor);
     display:flex;
     flex-direction: column;
-    
 }
 
 .sideBarDiv {
@@ -132,6 +158,10 @@ main {
     font-size:24px;
 }
 
+.bottomBarIcon {
+    margin: auto;
+}
+
 /* content */
 
 #toDoLayoutDiv {
@@ -143,10 +173,43 @@ main {
 
 }
 
-.listTitleDiv {
+.toDoTopMenu {
     margin-top: 20px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 
+#removeToDosBtn {
+    border: none;
+    height: 40px;
+    position:relative;
+    width: auto;
+    
+}
+
+#removeToDosBtn:hover {
+    transition: all 0.5s;
+    padding-right: 30px;
+}
+
+#removeToDosBtn::after{
+    content: "\f024";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    opacity: 0;
+    position:absolute;
+    left: 85%;
+        top: 31%;
+        right: 5%;
+        bottom: 0;
+}
+
+#removeToDosBtn:hover::after {
+    opacity: 1;
+    transition: all 0.5s;
 }
 
 .task {
@@ -155,6 +218,10 @@ main {
     padding: 20px 0px;
     border-bottom : 1px solid;
     border-color: var(--borderGrey);
+}
+
+.task:hover{
+    background-color:#F2F2F2;
 }
 
 .task i {
@@ -174,9 +241,13 @@ main {
     
 }
 
+.finished {
+    text-decoration: line-through ;
+}
+
 /* Add Task */
 
-#addTaskInput {
+#addTaskPopup {
     margin-top: 10px;
     display: none;
     flex-direction: column;
@@ -230,12 +301,21 @@ main {
     background-color: var(--secondOrange);
 }
 
+#errorMessageDiv {
+    margin-top: 10px;
+    color: red;
+}
+
 /** ProjectList **/
 #projectLayoutDiv{
     width: 100%;
     display:none;
     flex-direction: column;
-    margin: 5px;
+    padding: 0 20px;
+}
+
+#projectListDiv {
+    margin-top: 20px;
 }
 
 .projectDiv {
@@ -243,7 +323,10 @@ main {
     font-size: 18px;
     padding: 20px;
     padding-left: 20px;
-    border: 1px solid;
+}
+
+.projectDiv:hover {
+    background-color: #F2F2F2;
 }
 
 #addProjectButton{
