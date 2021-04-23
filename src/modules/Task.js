@@ -1,7 +1,6 @@
 export default class Task {
-    constructor (title, description, dueDate, priority){
+    constructor (title, dueDate, priority){
         this._title = title;
-        this._description = description;
         this._dueDate = dueDate;
         this._priority = priority;
     }
@@ -14,15 +13,15 @@ export default class Task {
         this._title = title;
     }
  
-    get description () {
-        return this._description;
-    }
+    // get description () {
+    //     return this._description;
+    // }
 
-    set description (description) {
-        this._description = description;
-    }
+    // set description (description) {
+    //     this._description = description;
+    // }
 
-    get dueDate () {
+    getDueDate () {
         return this._dueDate;
     }
 

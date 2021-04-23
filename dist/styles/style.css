@@ -229,6 +229,20 @@ main {
     font-size:20px;
 }
 
+#taskDateDiv p {
+    margin-top: 5px;
+    font-size: 14px !important;
+    color: var(--myRed);
+}
+
+#taskDateDiv p::before {
+    content: "\f133";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 400;
+    padding-right: 5px;
+    color: var(--myRed);
+}
+
 #taskCancelButton {
     margin-left: auto;
     margin-right: 5px;
@@ -256,6 +270,7 @@ main {
 
 .mainInputs {
     display: flex;
+    height: 40px;
 
 }
 
@@ -267,9 +282,36 @@ main {
     border-color: var(--borderGrey);
 }
 
-#calenderIcon {
-    width: 50px;
+#dateInput {
+    position: relative;
+    width: 150px;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    
+    /* color: transparent; */
+    /* height: 100%;
+    width: 30px;
+    cursor: pointer;
+    border: 1px solid; */
+    position: absolute;
+    left: 0px;
+    margin: 0px;
+    width: 100%;
+
+}
+input[type="date"]::-webkit-calendar-picker-indicator { 
+    position: absolute; left: 0; 
+}
+
+input::-webkit-datetime-edit {
+     position: relative; left: 15px; 
+    }
+
+input::-webkit-datetime-edit-fields-wrapper { 
+    position: relative; left: 15px; 
+}
+
 
 .secondaryInputs {
     display: flex;

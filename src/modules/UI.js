@@ -1,6 +1,6 @@
 import Coordinator from "./Coordinator.js";
 import Storage from "./Storage.js";
-// import datepicker from 'js-datepicker';
+import {format} from 'date-fns'; 
 
 
 export default class UI {
@@ -18,7 +18,6 @@ export default class UI {
         const createProjectButton = document.getElementById('createProjectBtn');
         const removeToDosButton = document.getElementById('removeToDosBtn');
         const doneItemsButton = document.getElementById('doneIcon');
-        const calenderButton = document.getElementById('calenderIcon');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
@@ -30,8 +29,8 @@ export default class UI {
         createProjectButton.addEventListener('click', Coordinator.handleCreateProjectButton);
         removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems)
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
-        calenderButton.addEventListener('click', UI.openCalenderBox)
-
+        todayButton.addEventListener('click', Coordinator.handleTodayListButton);
+        
         window.addEventListener('click', () =>{
             document.getElementById('context-menu').classList.remove('active');
         })
@@ -43,8 +42,6 @@ export default class UI {
         var contextElement = document.getElementById('context-menu');
 
         let menuPosition = UI.getPosition(e);
-        // contextElement.style.top = e.offsetX + 'px';
-        // contextElement.style.left = e.offsetY + 'px';
         contextElement.style.left = menuPosition.x + 'px';
         contextElement.style.top = menuPosition.y +'px';
         
@@ -57,14 +54,29 @@ export default class UI {
     
 
     static showProject (projectName) {
+        const projectToShow = Storage.getProjectList().getProject(projectName);
         UI.changeLayout('toDoList');
+        UI.resetInputs(projectName);
         UI.changeProjectTitle(projectName);
-        UI.showToDoList(projectName);
+        UI.showToDoList(projectToShow);
     }
 
-    static showToDoList(projectName){;
+    static resetInputs(projectName) {
+        UI.showAddTaskButton();
+        UI.closeAddTaskPopup();
+        if(projectName == "Today's Tasks" || projectName == "This Week's Tasks" || projectName == "Done"){
+            UI.hideAddTaskButton();
+        }
+
+        const titleInput = document.getElementById('taskTextInput');
+        titleInput.value = "";
+        const dateInput = document.getElementById('dateInput');
+        dateInput.value= "";
+
+    }
+
+    static showToDoList(projectToShow){;
         UI.resetList();
-        const projectToShow = Storage.getProjectList().getProject(projectName);
     
         for (let i=0; i< projectToShow.getTasks().length; i++){
             const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
@@ -86,7 +98,7 @@ export default class UI {
     static createTaskDivs(task) {
         
         const circle = UI.createCircle();
-        const taskContent = UI.createTaskContent(task);
+        const taskContent = UI.createTaskInfo(task);
         const deleteButton = UI.createDeleteButton(task);
         const div = document.createElement('div');
         div.classList.add('task');
@@ -123,11 +135,20 @@ export default class UI {
         return deleteBtn;
     }
 
-    static createTaskContent(task){
-        const content = document.createElement('p');
-        content.textContent = task.getTitle();
+    static createTaskInfo(task){
+        const title = document.createElement('p');
+        title.textContent = task.getTitle();
+        const div = document.createElement('div');
+        div.append(title);
 
-        return content;
+        if(task.getDueDate() !== "" ){
+            const date = document.createElement('p');
+            date.textContent = task.getDueDate();
+            const dateDiv = UI.embedInDiv(date, 'taskDateDiv');
+            div.append(dateDiv);
+        }
+
+        return div;
     }
 
     static resetList() {
@@ -152,8 +173,13 @@ export default class UI {
 
 
     static copyTaskInputInformation () {
-        const taskInputValue = document.getElementById('taskTextInput').value;
-        return taskInputValue;
+        const title = document.getElementById('taskTextInput').value;
+        const date = format(new Date(document.getElementById('dateInput').value), "dd.MM.yyyy")
+
+        return{
+            title,
+            date
+        }
     }
 
     static showTaskError () {
@@ -167,10 +193,12 @@ export default class UI {
         popUp.appendChild(errorMessageDiv);
     }
 
-    // Task options
+    static showAddTaskButton () {
+        document.getElementById('addTaskBtn').style.display = "flex";
+    }
 
-    static openCalenderBox () {
-        const picker = datepicker('.datepicker');
+    static hideAddTaskButton () {
+        document.getElementById('addTaskBtn').style.display = "none";
     }
 
     // Task finished
@@ -204,7 +232,7 @@ export default class UI {
     }
 
     static openDoneToDosPage() {
-        const project = "Done ToDo's";
+        const project = 'Done';
         UI.showProject(project);
     }
     static openProjectPage() {
@@ -284,7 +312,9 @@ export default class UI {
     }
 
     static deleteErrorMessage(element) {
-        element.removeChild(element.lastChild);
+        if(element.lastChild.id == 'errorMessageDiv'){
+            element.removeChild(element.lastChild);
+        }
     }
     // Layout 
 
@@ -312,6 +342,8 @@ export default class UI {
         const projectLayoutDiv = document.getElementById('projectLayoutDiv');
         projectLayoutDiv.classList.add('activeLayout');
     }
+
+    
 
     // Help Functions
 

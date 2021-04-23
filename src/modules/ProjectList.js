@@ -4,7 +4,9 @@ export default class ProjectList {
     constructor() { 
         this._projects = [];
         this._projects.push(new Project('Inbox'));
-        this._projects.push(new Project("Done ToDo's"))
+        this._projects.push(new Project("Done"));
+        this._projects.push(new Project("Today's Tasks"));
+        this._projects.push(new Project("This Week's Tasks"))
     } 
 
     setProjects (projects){

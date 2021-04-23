@@ -34,4 +34,8 @@ export default class Project {
         this.getTasks().splice(taskIndex, 1);
     }
 
+    clear() {
+        this._tasks = [];
+    }
+
 }

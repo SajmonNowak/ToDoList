@@ -18,9 +18,9 @@ export default class Coordinator {
         
         inbox.setTasks(
             [
-                new Task('Example1'),
-                new Task('Example2'),
-                new Task('Example3')
+                new Task('Example1', '16.05.2021'),
+                new Task('Example2', '29.05.2021'),
+                new Task('Example3', '3.08.2021')
             ]
         )
     }
@@ -34,23 +34,23 @@ export default class Coordinator {
     }
 
     static createTask() {
-        const taskName = UI.copyTaskInputInformation();
+        const userTaskInput = UI.copyTaskInputInformation();
 
-        if(taskName == ""){
+        if(userTaskInput.title == ""){
             UI.showTaskError();
             return;
         }
         
-        const task = Coordinator.createNewTask(taskName);
+        const task = Coordinator.createNewTask(userTaskInput);
         const projectName = this.closest('#toDoLayoutDiv').querySelector('#listTitle').textContent;
         
         UI.closeAddTaskPopup();
         Storage.addTask(projectName, task);
-        UI.showToDoList(projectName);
+        UI.showProject(projectName);
     }
 
-    static createNewTask(taskInputValue) {
-        return new Task (taskInputValue);
+    static createNewTask(input) {
+        return new Task (input.title, input.date);
     }
     
     static deleteTask(){
@@ -58,6 +58,22 @@ export default class Coordinator {
         const projectName = this.closest('main').querySelector('#listTitle').textContent;
         Storage.deleteTask(projectName, task);
         UI.showProject(projectName);
+    }
+
+    static handleTodayListButton() {
+        const projectList = Storage.getProjectList();
+        const inbox = projectList.getProject('Inbox'); 
+        const todayList =  projectList.getProject("Today's Tasks");
+        todayList.clear();
+        console.log(todayList);
+
+        const todaysTasks = inbox.getTasks().filter(task => task.getDueDate() == '23.04.2021');
+        for (let i=0; i<todaysTasks.length; i++){
+            todayList.addTask(todaysTasks[i]);
+        }
+
+        Storage.saveProjectList(projectList);
+        UI.showProject("Today's Tasks");
     }
 
     static handleCreateProjectButton () {
@@ -100,7 +116,7 @@ export default class Coordinator {
 
         for (let i = 0; i<finishedTasks.length; i++){
             const taskName = finishedTasks[i].querySelector('p').textContent;
-            Storage.addTask("Done ToDo's", openProject.getTask(taskName));
+            Storage.addTask("Done", openProject.getTask(taskName));
             Storage.deleteTask(openProjectName, openProject.getTask(taskName));
         }
 
