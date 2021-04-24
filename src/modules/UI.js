@@ -30,6 +30,7 @@ export default class UI {
         removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems)
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
+        weekButton.addEventListener('click', Coordinator.handleWeekListButton);
         
         window.addEventListener('click', () =>{
             document.getElementById('context-menu').classList.remove('active');
@@ -64,7 +65,7 @@ export default class UI {
     static resetInputs(projectName) {
         UI.showAddTaskButton();
         UI.closeAddTaskPopup();
-        if(projectName == "Today's Tasks" || projectName == "This Week's Tasks" || projectName == "Done"){
+        if(projectName == "Today's Tasks" || projectName == "Week's Tasks" || projectName == "Done"){
             UI.hideAddTaskButton();
         }
 
@@ -77,7 +78,6 @@ export default class UI {
 
     static showToDoList(projectToShow){;
         UI.resetList();
-    
         for (let i=0; i< projectToShow.getTasks().length; i++){
             const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
             UI.displayTaskDiv(taskDiv);
@@ -143,7 +143,7 @@ export default class UI {
 
         if(task.getDueDate() !== "" ){
             const date = document.createElement('p');
-            date.textContent = task.getDueDate();
+            date.textContent = format(new Date(task.getDueDate()), "dd.MM.yyy");
             const dateDiv = UI.embedInDiv(date, 'taskDateDiv');
             div.append(dateDiv);
         }
@@ -174,8 +174,8 @@ export default class UI {
 
     static copyTaskInputInformation () {
         const title = document.getElementById('taskTextInput').value;
-        const date = format(new Date(document.getElementById('dateInput').value), "dd.MM.yyyy")
-
+        const date = new Date(document.getElementById('dateInput').value);
+        
         return{
             title,
             date
@@ -242,13 +242,17 @@ export default class UI {
     }
 
     static showAllProjects(){
+        let notShowArray = ["Inbox", "Done", "Week's Tasks", "Today's Tasks"];
         UI.clearProjectList();
         const projects = Storage.getProjectList().getProjects();
         const projectListDiv = document.getElementById('projectListDiv');
         for(let i=0; i<projects.length ; i++){
-            const projectDiv = UI.createProjectDiv(projects[i]);
-            projectDiv.classList.add('projectDiv');
-            projectListDiv.appendChild(projectDiv);
+            console.log(projects[i].getName());
+            if(!(notShowArray.includes(projects[i].getName()))){
+                const projectDiv = UI.createProjectDiv(projects[i]);
+                projectDiv.classList.add('projectDiv');
+                projectListDiv.appendChild(projectDiv);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ import UI from './UI.js';
 import ProjectList from './ProjectList.js';
 import Storage from './Storage.js'
 import Project from './Project.js';
+import {format,isSameDay, isBefore, addWeeks, compareAsc} from 'date-fns'
 
 export default class Coordinator {
 
@@ -18,9 +19,9 @@ export default class Coordinator {
         
         inbox.setTasks(
             [
-                new Task('Example1', '16.05.2021'),
-                new Task('Example2', '29.05.2021'),
-                new Task('Example3', '3.08.2021')
+                new Task('Example1', new Date()),
+                new Task('Example2', new Date()),
+                new Task('Example3', new Date())
             ]
         )
     }
@@ -65,9 +66,8 @@ export default class Coordinator {
         const inbox = projectList.getProject('Inbox'); 
         const todayList =  projectList.getProject("Today's Tasks");
         todayList.clear();
-        console.log(todayList);
 
-        const todaysTasks = inbox.getTasks().filter(task => task.getDueDate() == '23.04.2021');
+        const todaysTasks = inbox.getTasks().filter(task => isSameDay(new Date(task.getDueDate()), new Date()));
         for (let i=0; i<todaysTasks.length; i++){
             todayList.addTask(todaysTasks[i]);
         }
@@ -75,6 +75,24 @@ export default class Coordinator {
         Storage.saveProjectList(projectList);
         UI.showProject("Today's Tasks");
     }
+
+    static handleWeekListButton () {
+        const projectList = Storage.getProjectList();
+        const inbox = projectList.getProject('Inbox'); 
+        const weekList =  projectList.getProject("Week's Tasks");
+        weekList.clear();
+
+        const weekTasks = inbox.getTasks().filter(
+            task => isBefore(new Date(task.getDueDate()), addWeeks(new Date(), 1)));
+
+        for (let i=0; i<weekTasks.length; i++){
+            weekList.addTask(weekTasks[i]);
+        }
+
+        Storage.saveProjectList(projectList);
+        UI.showProject("Week's Tasks");
+    }
+    // format(addWeeks(new Date(), 1),"dd.MM.yyyy")
 
     static handleCreateProjectButton () {
         const projectName = UI.copyInputProjectInformation();
