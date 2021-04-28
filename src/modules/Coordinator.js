@@ -114,30 +114,23 @@ export default class Coordinator {
    }
 
    static handleClickOnTask(){
-        if (this.classList.contains('finished')){
-            UI.markNotFinished(this);
-            return;
-        }
         UI.markTaskFinished(this);
+        setTimeout(() => {Coordinator.shiftTask(this)}, 1500);
     }
 
     static shiftDoneItems () {
-        // const project = Coordinator.getCurrentProject();
         const openProjectName = document.getElementById('listTitle').textContent;
         Coordinator.shiftTaskToProject(openProjectName);
         UI.showProject(openProjectName);
     }
 
-    static shiftTaskToProject(openProjectName, task) {
+    static shiftTask(task) {
+        const taskName = task.querySelector('p').textContent;
+        const openProjectName = document.getElementById('listTitle').textContent;
         const openProject = Storage.getProjectList().getProject(openProjectName);
-        const finishedTasks = document.querySelectorAll('.finished');
 
-        for (let i = 0; i<finishedTasks.length; i++){
-            const taskName = finishedTasks[i].querySelector('p').textContent;
-            Storage.addTask("Done", openProject.getTask(taskName));
-            Storage.deleteTask(openProjectName, openProject.getTask(taskName));
-        }
-
+        Storage.addTask("Done", openProject.getTask(taskName));
+        Storage.deleteTask(openProjectName, openProject.getTask(taskName));
+        UI.showProject(openProjectName);
     }
-
 }

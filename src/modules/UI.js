@@ -7,8 +7,8 @@ export default class UI {
 
     static initialiseButtons () {
         const addTaskButton = document.getElementById('addTaskBtn');
-        const cancelAddTaskButton = document.getElementById('cancelAddTaskBtn');
-        const createTaskButton = document.getElementById('createTaskBtn');
+        const cancelAddTaskButton = document.getElementById('cancelAddTaskBtn')
+        const createTaskButton = document.getElementById('createTaskBtn')
         const inboxButton = document.getElementById('inboxIcon');
         const todayButton = document.getElementById('todayIcon');
         const weekButton = document.getElementById('weekIcon');
@@ -16,18 +16,16 @@ export default class UI {
         const addProjectButton = document.getElementById('addProjectButton');
         const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
         const createProjectButton = document.getElementById('createProjectBtn');
-        const removeToDosButton = document.getElementById('removeToDosBtn');
         const doneItemsButton = document.getElementById('doneIcon');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
-        cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
+        cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
         createTaskButton.addEventListener('click', Coordinator.createTask);
         inboxButton.addEventListener('click', UI.openInbox);
         projectButton.addEventListener('click', UI.openProjectPage);
         addProjectButton.addEventListener('click', UI.openAddProjectPopup);
         cancelAddProjectButton.addEventListener('click', UI.closeProjectPopup);
         createProjectButton.addEventListener('click', Coordinator.handleCreateProjectButton);
-        removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems);
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
         weekButton.addEventListener('click', Coordinator.handleWeekListButton);
@@ -301,7 +299,6 @@ export default class UI {
         popup.classList.remove('activePopup'); 
         document.getElementById('addProjectButton').style.display = 'flex';
         UI.deleteErrorMessage(popup);
-        UI.resetProjectInputs();
     }
 
     static copyInputProjectInformation() {

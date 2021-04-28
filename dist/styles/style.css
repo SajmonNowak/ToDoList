@@ -122,26 +122,26 @@ button {
 
 header {
     background-color: var(--mainOrange);
+    position: sticky;
+    top:0;
     display: flex;
     width: 100%;
-    height: 10%;
+    height: 10vh;
     min-height: 60px;
-}
-
-/* main */
-
-main {
-    display: flex;
-    width: 100%;
-    height: 100%;
+    z-index: 100;
 }
 
 /* sidebar */
+
+
 #sidebar {
+    position: sticky;
+    top: 10vh;
+    height: 90vh;
     min-width: 54px;
     border-right: 1px solid;
     background-color: var(--backgroundColor);
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
@@ -163,6 +163,12 @@ main {
 }
 
 /* content */
+
+.maindiv {
+    display: flex;
+    height: auto;
+    position: relative;
+}
 
 #toDoLayoutDiv {
     display: none;
@@ -288,12 +294,6 @@ main {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    
-    /* color: transparent; */
-    /* height: 100%;
-    width: 30px;
-    cursor: pointer;
-    border: 1px solid; */
     position: absolute;
     left: 0px;
     margin: 0px;
@@ -350,6 +350,7 @@ input::-webkit-datetime-edit-fields-wrapper {
 
 /** ProjectList **/
 #projectLayoutDiv{
+    margin-top: 20px;
     width: 100%;
     display:none;
     flex-direction: column;
