@@ -1,8 +1,9 @@
 
 export default class Project {
-    constructor (name) {
+    constructor (name, color) {
         this._name = name;
         this._tasks = [];
+        this._color = color;
     }
 
     setName(name) {
@@ -32,6 +33,14 @@ export default class Project {
     deleteTask(task) {
         const taskIndex = this.getTasks().findIndex(element => element.getTitle() == task);
         this.getTasks().splice(taskIndex, 1);
+    }
+
+    getColor() {
+        return this._color;
+    }
+
+    setColor(color) {
+        this._color = color;
     }
 
     clear() {

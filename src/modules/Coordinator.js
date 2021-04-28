@@ -95,20 +95,20 @@ export default class Coordinator {
     // format(addWeeks(new Date(), 1),"dd.MM.yyyy")
 
     static handleCreateProjectButton () {
-        const projectName = UI.copyInputProjectInformation();
+        const projectName = UI.copyInputProjectInformation().title;
 
         if(projectName == ""){
             UI.showProjectError();
             return;
         }
 
-        const project = Coordinator.createNewProject(projectName);
+        const project = Coordinator.createNewProject(UI.copyInputProjectInformation());
         UI.closeProjectPopup();
         UI.showAllProjects();
     }
     
-   static createNewProject(name) {
-        const project = new Project (name);
+   static createNewProject(input) {
+        const project = new Project (input.title, input.color);
         Storage.addProject(project);
         return project;
    }

@@ -7,8 +7,8 @@ export default class UI {
 
     static initialiseButtons () {
         const addTaskButton = document.getElementById('addTaskBtn');
-        const cancelAddTaskButton = document.getElementById('cancelAddTaskBtn')
-        const createTaskButton = document.getElementById('createTaskBtn')
+        const cancelAddTaskButton = document.getElementById('cancelAddTaskBtn');
+        const createTaskButton = document.getElementById('createTaskBtn');
         const inboxButton = document.getElementById('inboxIcon');
         const todayButton = document.getElementById('todayIcon');
         const weekButton = document.getElementById('weekIcon');
@@ -20,14 +20,14 @@ export default class UI {
         const doneItemsButton = document.getElementById('doneIcon');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
-        cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
+        cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
         createTaskButton.addEventListener('click', Coordinator.createTask);
         inboxButton.addEventListener('click', UI.openInbox);
         projectButton.addEventListener('click', UI.openProjectPage);
         addProjectButton.addEventListener('click', UI.openAddProjectPopup);
         cancelAddProjectButton.addEventListener('click', UI.closeProjectPopup);
         createProjectButton.addEventListener('click', Coordinator.handleCreateProjectButton);
-        removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems)
+        removeToDosButton.addEventListener('click', Coordinator.shiftDoneItems);
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
         weekButton.addEventListener('click', Coordinator.handleWeekListButton);
@@ -57,12 +57,12 @@ export default class UI {
     static showProject (projectName) {
         const projectToShow = Storage.getProjectList().getProject(projectName);
         UI.changeLayout('toDoList');
-        UI.resetInputs(projectName);
+        UI.resetTaskInputs(projectName);
         UI.changeProjectTitle(projectName);
         UI.showToDoList(projectToShow);
     }
 
-    static resetInputs(projectName) {
+    static resetTaskInputs(projectName) {
         UI.showAddTaskButton();
         UI.closeAddTaskPopup();
         if(projectName == "Today's Tasks" || projectName == "Week's Tasks" || projectName == "Done"){
@@ -238,6 +238,7 @@ export default class UI {
     static openProjectPage() {
         UI.changeLayout('projectList');
         UI.showAllProjects();
+        UI.resetProjectInputs();
 
     }
 
@@ -250,7 +251,6 @@ export default class UI {
             console.log(projects[i].getName());
             if(!(notShowArray.includes(projects[i].getName()))){
                 const projectDiv = UI.createProjectDiv(projects[i]);
-                projectDiv.classList.add('projectDiv');
                 projectListDiv.appendChild(projectDiv);
             }
         }
@@ -262,9 +262,10 @@ export default class UI {
     }
 
     static createProjectDiv (project) {
-        const projectTitle = document.createElement('p');
-        projectTitle.textContent = project.getName();
-        const projectDiv = UI.embedInDiv(projectTitle);
+        const input = UI.createProjectInformation(project);
+        const projectDiv = document.createElement('div');
+        projectDiv.append (input.colorCircle, input.projectTitle);
+        projectDiv.classList.add('projectDiv');
         projectDiv.addEventListener('click', UI.showProjectToDos)
         projectDiv.addEventListener('contextmenu', e => {
             e.preventDefault();
@@ -272,6 +273,20 @@ export default class UI {
         })
 
         return projectDiv;
+    }
+
+    static createProjectInformation(project) {
+        const projectTitle = document.createElement('p');
+        projectTitle.textContent = project.getName();
+        const colorCircle = document.createElement('i');
+        colorCircle.classList.add('fas', 'fa-circle');
+        colorCircle.style.color = project.getColor();
+
+        return{
+            projectTitle,
+            colorCircle,
+        }
+
     }
 
     static openAddProjectPopup() {
@@ -286,12 +301,17 @@ export default class UI {
         popup.classList.remove('activePopup'); 
         document.getElementById('addProjectButton').style.display = 'flex';
         UI.deleteErrorMessage(popup);
+        UI.resetProjectInputs();
     }
 
     static copyInputProjectInformation() {
-        const input = document.getElementById('projectNameInput').value;
+        const title = document.getElementById('projectNameInput').value;
+        const color = document.getElementById('colorOption').value;
 
-        return input;
+        return{
+            title,
+            color
+        }
     }
 
     static clearProjectList() {
@@ -319,6 +339,11 @@ export default class UI {
         if(element.lastChild.id == 'errorMessageDiv'){
             element.removeChild(element.lastChild);
         }
+    }
+
+    static resetProjectInputs() {
+        document.getElementById('projectNameInput').value = '';
+        document.getElementById('colorOption').value = '';
     }
     // Layout 
 
