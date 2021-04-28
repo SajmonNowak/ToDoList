@@ -24,95 +24,97 @@
             </div>
 
             <!-- SideBar-->
-
-            <div id="sidebar" >
-                <div id="inboxIcon" class="sideBarDiv">
-                <i class="fas fa-inbox sideBarIcon"></i>
-                </div> 
-                <div id="todayIcon" class="sideBarDiv">
-                    <i class="fas fa-calendar-day sideBarIcon"></i>
-                </div>
-                <div id="weekIcon" class="sideBarDiv">
-                    <i class="fas fa-calendar-alt sideBarIcon"></i>
-                </div>
-                <div id="projectIcon" class="sideBarDiv">
-                <i class="fas fa-list-ul sideBarIcon"></i>
-                </div>
-                <div id="doneIcon" class="sideBarDiv bottomBarIcon">
-                    <i class="fas fa-flag sideBarIcon"></i>
+            <div class="mainDiv">
+                <div class="sidebar2">
+                <div id="sidebar" >
+                    <div id="inboxIcon" class="sideBarDiv">
+                    <i class="fas fa-inbox sideBarIcon"></i>
+                    </div> 
+                    <div id="todayIcon" class="sideBarDiv">
+                        <i class="fas fa-calendar-day sideBarIcon"></i>
                     </div>
-            </div>
-
-            <!-- ToDo List Layout-->
-            <div id="toDoLayoutDiv">
-                <div class ="toDoTopMenu">
-                    <h2 id="listTitle">Inbox</h2>
-                    <button id="removeToDosBtn"> Shift done ToDo's </button>
-                </div>
-                <div id="list">
-            
-                </div>
-                <div class="addTask addButton" id="addTaskBtn">
-                    <i class="fas fa-plus plusSign"></i><h4>Add Task</h4>
-                </div>
-
-                <!--Add Task Popup-->
-                <div id="addTaskPopup">
-                    <div class="mainInputs">
-                        <input type="text" id="taskTextInput" placeholder="Task">
-                        <input type="date" id="dateInput">
+                    <div id="weekIcon" class="sideBarDiv">
+                        <i class="fas fa-calendar-alt sideBarIcon"></i>
                     </div>
-                    <div class="secondaryInputs">
-                        <div id="projectInputIcon" class="ContentIconDiv">
-                            <i class="fas fa-list-ul"></i>
-                        </div>
-                        <div id="timeInputIcon" class="ContentIconDiv">
-                            <i class="far fa-clock"></i>
-                        </div>
-                        <div id="priorityInputIcon" class="ContentIconDiv">
-                            <i class="far fa-star" id="star1"></i>
-                            <i class="far fa-star" id="star2"></i>
-                            <i class="far fa-star" id="star3"></i>
-                        </div>
+                    <div id="projectIcon" class="sideBarDiv">
+                    <i class="fas fa-list-ul sideBarIcon"></i>
                     </div>
-                    <div class="inputButtonDiv">
-                        <button id="createTaskBtn" class="inputButton">Add Task</button>
-                        <button id="cancelAddTaskBtn" class="inputButton">Cancel</button>
+                    <div id="doneIcon" class="sideBarDiv bottomBarIcon">
+                        <i class="fas fa-flag sideBarIcon"></i>
                     </div>
                 </div>
-            </div>
+                </div>
 
-            <!-- ProjectList layout-->
-            <div id="projectLayoutDiv">
-                <div class="projectListTitle">
-                    <h2>Your Projects</h2>
-                </div>
-                <div id="projectListDiv">
-                </div>
+                <!-- ToDo List Layout-->
+                <div id="toDoLayoutDiv">
+                    <div class ="toDoTopMenu">
+                        <h2 id="listTitle">Inbox</h2>
+                    </div>
+                    <div id="list">
                 
-                    <button id="addProjectButton"> <i class="fas fa-plus plusSign"></i><h4>Add Project</h4></button>
-                
-                 <!-- Add Project PopUp-->
-                <div id="addProjectPopup">
-                    <h4>Add a new Project</h4>
-                    <div class="projectNameInputDiv">
-                        <input type="text" placeholder="Project" id="projectNameInput"> 
                     </div>
-                    <div>
-                        <select name ="color" id="colorOption">
-                            <option value="" disabled selected>Project color</option>
-                            <option value= "red">Red</option>
-                            <option value = "blue">Blue</option>
-                            <option value= "green"> Green </option>
-                            <option value= "yellow"> Yellow </option>
-                            <option value= "orange"> Orange </option>
-                            <option value = "magenta"> Magenta </option>
-                            <option value ="black"> Black </option>
-                        </select>
+                    <div class="addTask addButton" id="addTaskBtn">
+                        <i class="fas fa-plus plusSign"></i><h4>Add Task</h4>
                     </div>
-                    <div class="addProjectButtons">
-                        <button id="createProjectBtn" class="inputButton">Add</button>
-                        <button id="cancelAddProjectBtn" class="inputButton">Cancel</button>
+
+                    <!--Add Task Popup-->
+                    <div id="addTaskPopup">
+                        <div class="mainInputs">
+                            <input type="text" id="taskTextInput" placeholder="Task">
+                            <input type="date" id="dateInput">
+                        </div>
+                        <div class="secondaryInputs">
+                            <div id="projectInputIcon" class="ContentIconDiv">
+                                <i class="fas fa-list-ul"></i>
+                            </div>
+                            <div id="timeInputIcon" class="ContentIconDiv">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div id="priorityInputIcon" class="ContentIconDiv">
+                                <i class="far fa-star" id="star1"></i>
+                                <i class="far fa-star" id="star2"></i>
+                                <i class="far fa-star" id="star3"></i>
+                            </div>
+                        </div>
+                        <div class="inputButtonDiv">
+                            <button id="createTaskBtn" class="inputButton">Add Task</button>
+                            <button id="cancelAddTaskBtn" class="inputButton">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ProjectList layout-->
+                <div id="projectLayoutDiv">
+                    <div class="projectListTitle">
+                        <h2>Your Projects</h2>
+                    </div>
+                    <div id="projectListDiv">
+                    </div>
+                    
+                        <button id="addProjectButton"> <i class="fas fa-plus plusSign"></i><h4>Add Project</h4></button>
+                    
+                    <!-- Add Project PopUp-->
+                    <div id="addProjectPopup">
+                        <h4>Add a new Project</h4>
+                        <div class="projectNameInputDiv">
+                            <input type="text" placeholder="Project" id="projectNameInput"> 
+                        </div>
+                        <div>
+                            <select name ="color" id="colorOption">
+                                <option value="" disabled selected>Project color</option>
+                                <option value= "red">Red</option>
+                                <option value = "blue">Blue</option>
+                                <option value= "green"> Green </option>
+                                <option value= "yellow"> Yellow </option>
+                                <option value= "orange"> Orange </option>
+                                <option value = "magenta"> Magenta </option>
+                                <option value ="black"> Black </option>
+                            </select>
+                        </div>
+                        <div class="addProjectButtons">
+                            <button id="createProjectBtn" class="inputButton">Add</button>
+                            <button id="cancelAddProjectBtn" class="inputButton">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
