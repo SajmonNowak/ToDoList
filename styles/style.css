@@ -348,6 +348,11 @@ input::-webkit-datetime-edit-fields-wrapper {
     color: red;
 }
 
+.dueTask {
+    font-weight: bold;
+    color: var(--myRed);
+}
+
 /** ProjectList **/
 #projectLayoutDiv{
     margin-top: 20px;
