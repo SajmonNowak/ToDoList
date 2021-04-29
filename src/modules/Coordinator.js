@@ -3,13 +3,12 @@ import UI from './UI.js';
 import ProjectList from './ProjectList.js';
 import Storage from './Storage.js'
 import Project from './Project.js';
-import {format,isSameDay, isBefore, addWeeks, compareAsc} from 'date-fns'
+import {format,isSameDay, isBefore, addWeeks, isWithinInterval} from 'date-fns'
 
 export default class Coordinator {
 
     static loadPage(){
         UI.initialiseButtons();
-        // UI.changeLayout('toDoList');
         Coordinator.initialiseProjects();
         UI.showProject('Inbox');
     }
@@ -63,11 +62,23 @@ export default class Coordinator {
 
     static handleTodayListButton() {
         const projectList = Storage.getProjectList();
-        const inbox = projectList.getProject('Inbox'); 
         const todayList =  projectList.getProject("Today's Tasks");
+        let todaysTasks = [];
         todayList.clear();
 
-        const todaysTasks = inbox.getTasks().filter(task => isSameDay(new Date(task.getDueDate()), new Date()));
+        for(let i=0; i<projectList.getProjects().length; i++){
+            if (
+                projectList.getProjects()[i].getName() !== "Today's Tasks" ||
+                projectList.getProjects()[i].getName() !== "Week's Tasks"  ||
+                projectList.getProjects()[i].getName() !== "Done"
+            ) {            
+                const taskArray = projectList.getProjects()[i].getTasks().filter(task => isSameDay(new Date(task.getDueDate()), new Date()))
+                for(let i=0; i< taskArray.length; i++) {
+                    todaysTasks.push(taskArray[i])
+                };
+            }
+        }
+
         for (let i=0; i<todaysTasks.length; i++){
             todayList.addTask(todaysTasks[i]);
         }
@@ -78,13 +89,28 @@ export default class Coordinator {
 
     static handleWeekListButton () {
         const projectList = Storage.getProjectList();
-        const inbox = projectList.getProject('Inbox'); 
         const weekList =  projectList.getProject("Week's Tasks");
+        const weekTasks = [];
         weekList.clear();
 
-        const weekTasks = inbox.getTasks().filter(
-            task => isBefore(new Date(task.getDueDate()), addWeeks(new Date(), 1)));
-
+        for(let i=0; i<projectList.getProjects().length; i++){
+            if (
+                projectList.getProjects()[i].getName() !== "Today's Tasks" ||
+                projectList.getProjects()[i].getName() !== "Week's Tasks"  ||
+                projectList.getProjects()[i].getName() !== "Done"
+            ) {
+                const taskArray = projectList.getProjects()[i].getTasks().filter(
+                    task => isWithinInterval(
+                        new Date(task.getDueDate()),
+                        {start: new Date(), end: addWeeks(new Date(), 1)}
+                    )
+                );
+                for (let i=0; i<taskArray.length; i++){
+                    weekTasks.push(taskArray[i]);
+                }
+            }
+        }
+        
         for (let i=0; i<weekTasks.length; i++){
             weekList.addTask(weekTasks[i]);
         }
@@ -92,7 +118,6 @@ export default class Coordinator {
         Storage.saveProjectList(projectList);
         UI.showProject("Week's Tasks");
     }
-    // format(addWeeks(new Date(), 1),"dd.MM.yyyy")
 
     static handleCreateProjectButton () {
         const projectName = UI.copyInputProjectInformation().title;

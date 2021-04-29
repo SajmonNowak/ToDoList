@@ -1,6 +1,6 @@
 import Coordinator from "./Coordinator.js";
 import Storage from "./Storage.js";
-import {format} from 'date-fns'; 
+import {format, isBefore, startOfDay} from 'date-fns'; 
 
 
 export default class UI {
@@ -19,7 +19,7 @@ export default class UI {
         const doneItemsButton = document.getElementById('doneIcon');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
-        cancelAddTaskButton.addEventListener('click', UI.closeAddTaskPopup);
+        cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
         createTaskButton.addEventListener('click', Coordinator.createTask);
         inboxButton.addEventListener('click', UI.openInbox);
         projectButton.addEventListener('click', UI.openProjectPage);
@@ -107,6 +107,10 @@ export default class UI {
             UI.openContextMenu(e);
         })
 
+        if (isBefore(new Date(task.getDueDate()), startOfDay(new Date()))){
+            div.classList.add('dueTask');
+        }
+
         return div;
          
     }
@@ -139,7 +143,7 @@ export default class UI {
         const div = document.createElement('div');
         div.append(title);
 
-        if(task.getDueDate() !== "" ){
+        if(task.getDueDate() !== 'No dueDate' ){
             const date = document.createElement('p');
             date.textContent = format(new Date(task.getDueDate()), "dd.MM.yyy");
             const dateDiv = UI.embedInDiv(date, 'taskDateDiv');
@@ -172,8 +176,12 @@ export default class UI {
 
     static copyTaskInputInformation () {
         const title = document.getElementById('taskTextInput').value;
-        const date = new Date(document.getElementById('dateInput').value);
-        
+        const dateInput = document.getElementById('dateInput').value;
+        let date = 'No dueDate'
+        if (dateInput !== ""){
+            date = new Date(document.getElementById('dateInput').value);
+        }
+
         return{
             title,
             date
@@ -246,7 +254,6 @@ export default class UI {
         const projects = Storage.getProjectList().getProjects();
         const projectListDiv = document.getElementById('projectListDiv');
         for(let i=0; i<projects.length ; i++){
-            console.log(projects[i].getName());
             if(!(notShowArray.includes(projects[i].getName()))){
                 const projectDiv = UI.createProjectDiv(projects[i]);
                 projectListDiv.appendChild(projectDiv);
