@@ -18,6 +18,7 @@ export default class UI {
         const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
         const createProjectButton = document.getElementById('createProjectBtn');
         const doneItemsButton = document.getElementById('doneIcon');
+        const priorityInputDiv = document.getElementById('priorityInputDiv')
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
@@ -31,6 +32,7 @@ export default class UI {
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
         weekButton.addEventListener('click', Coordinator.handleWeekListButton);
+        priorityInputDiv.addEventListener('click', UI.addStarIcon)
         
         window.addEventListener('click', () =>{
             document.getElementById('context-menu').classList.remove('active');
@@ -105,9 +107,10 @@ export default class UI {
         const circle = UI.createCircle();
         const taskContent = UI.createTaskInfo(task);
         const deleteButton = UI.createDeleteButton(task);
+        const starDiv = UI.createStarDiv(task);
         const div = document.createElement('div');
         div.classList.add('task');
-        div.append(circle,taskContent, deleteButton);
+        div.append(circle,taskContent, starDiv, deleteButton);
         div.addEventListener('click', Coordinator.handleClickOnTask);
         div.addEventListener('contextmenu', e => {
             e.preventDefault();
@@ -150,7 +153,6 @@ export default class UI {
         const div = document.createElement('div');
         div.append(title);
 
-
         if(task.getDueDate() !== 'No dueDate' ){
             const date = document.createElement('p');
             date.textContent = format(new Date(task.getDueDate()), "dd.MM.yyy");
@@ -159,6 +161,18 @@ export default class UI {
         }
 
         return div;
+    }
+
+    static createStarDiv (task) {
+        const priorityDiv = document.createElement('div');
+        priorityDiv.classList.add('taskPriorityInfo');
+        for (let i=0; i<task.getPriority(); i++){
+            const star = document.createElement('i');
+            star.classList.add('fas', 'fa-star', 'taskInfoStar');
+            priorityDiv.appendChild(star);
+        }
+        
+        return priorityDiv;
     }
     
     static resetList() {
@@ -193,15 +207,17 @@ export default class UI {
         }
 
         let project = document.getElementById('projectSelectList').value;
-        
         if (project == "noProject" || project == ""){
             project = "Inbox";
         }
 
+        const priority = document.querySelectorAll('.activeStar').length;
+        
         return{
             title,
             date,
-            project
+            project,
+            priority
         }
     }
 
@@ -239,6 +255,35 @@ export default class UI {
 
     static hideAddTaskButton () {
         document.getElementById('addTaskBtn').style.display = "none";
+    }
+
+    static addStarIcon() {
+        const priorityDiv = document.getElementById('priorityInputDiv');
+
+        const activeStars = priorityDiv.querySelectorAll('.activeStar');
+        console.log(activeStars.length);
+        switch(activeStars.length) {
+            
+            case 0:
+                console.log('moin');
+            const star1 = priorityDiv.querySelector('#star1');
+            star1.classList.add('activeStar');
+            break;
+            case 1:
+            const star2 = priorityDiv.querySelector('#star2');
+            star2.classList.add('activeStar');
+            break;
+            case 2:
+            const star3 = priorityDiv.querySelector('#star3');
+            star3.classList.add('activeStar');
+            break;
+            case 3: 
+            for (let i=0; i<3; i++){
+                activeStars[i].classList.remove('activeStar');
+            }
+            break;
+        }
+
     }
 
     // Task finished

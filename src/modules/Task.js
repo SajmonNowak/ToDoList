@@ -34,7 +34,7 @@ export default class Task {
         return this._project;
     }
 
-    get priority() {
+    getPriority() {
         return this._priority;
     }
 

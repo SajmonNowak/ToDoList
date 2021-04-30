@@ -55,7 +55,7 @@ export default class Coordinator {
     }
 
     static createNewTask(input) {
-        return new Task (input.title, input.date, input.project);
+        return new Task (input.title, input.date, input.project, input.priority);
     }
     
     static deleteTask(){
