@@ -319,10 +319,10 @@ input::-webkit-datetime-edit-fields-wrapper {
     flex-direction: row;
 }
 
-#priorityInputIcon {
+#priorityInputDiv {
     width: 150px;
 }
-#priorityInputIcon > i {
+#priorityInputDiv > i {
     margin-right: 10px; 
 }
 
@@ -383,7 +383,20 @@ div.selectDiv {
     color: var(--borderGrey);
 }
 
+.taskPriorityInfo {
+    position: absolute;
+    right: 100px;
+}
 
+.task .taskInfoStar {
+    font-size: 16px ;
+    padding: 0px;
+    margin: 0px;
+}
+
+.activeStar {
+    color: gold;
+}
 
 /** ProjectList **/
 #projectLayoutDiv{
