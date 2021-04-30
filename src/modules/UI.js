@@ -12,6 +12,7 @@ export default class UI {
         const inboxButton = document.getElementById('inboxIcon');
         const todayButton = document.getElementById('todayIcon');
         const weekButton = document.getElementById('weekIcon');
+        const projectInputButton = document.getElementById('projectInputField')
         const projectButton = document.getElementById('projectIcon');
         const addProjectButton = document.getElementById('addProjectButton');
         const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
@@ -22,6 +23,7 @@ export default class UI {
         cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
         createTaskButton.addEventListener('click', Coordinator.createTask);
         inboxButton.addEventListener('click', UI.openInbox);
+        projectInputButton.addEventListener('click', UI.openProjectInput)
         projectButton.addEventListener('click', UI.openProjectPage);
         addProjectButton.addEventListener('click', UI.openAddProjectPopup);
         cancelAddProjectButton.addEventListener('click', UI.closeProjectPopup);
@@ -71,6 +73,11 @@ export default class UI {
         titleInput.value = "";
         const dateInput = document.getElementById('dateInput');
         dateInput.value= "";
+        const projectInput = document.getElementById('projectSelectList');
+        const projectOptions = document.querySelectorAll('.projectOption');
+        for (let i=0; i<projectOptions.length; i++){
+            projectInput.removeChild(projectOptions[i]);
+        }
 
     }
 
@@ -143,6 +150,7 @@ export default class UI {
         const div = document.createElement('div');
         div.append(title);
 
+
         if(task.getDueDate() !== 'No dueDate' ){
             const date = document.createElement('p');
             date.textContent = format(new Date(task.getDueDate()), "dd.MM.yyy");
@@ -152,7 +160,7 @@ export default class UI {
 
         return div;
     }
-
+    
     static resetList() {
         const listContent = document.getElementById('list');
         listContent.innerHTML = '';
@@ -163,6 +171,7 @@ export default class UI {
         
         addTaskPopup.style.display = 'flex';
         document.getElementById('addTaskBtn').style.display = 'none';
+        UI.generateSelectProjects();
     }
 
     static closeAddTaskPopup () {
@@ -176,17 +185,42 @@ export default class UI {
 
     static copyTaskInputInformation () {
         const title = document.getElementById('taskTextInput').value;
+
         const dateInput = document.getElementById('dateInput').value;
         let date = 'No dueDate'
         if (dateInput !== ""){
             date = new Date(document.getElementById('dateInput').value);
         }
 
+        let project = document.getElementById('projectSelectList').value;
+        
+        if (project == "noProject" || project == ""){
+            project = "Inbox";
+        }
+
         return{
             title,
-            date
+            date,
+            project
         }
     }
+
+    static generateSelectProjects() {
+        const projects = Storage.getProjectList().getProjects();
+        const selectList = document.getElementById('projectSelectList');
+        const notOptions = ["Done", "Today's Tasks", "Week's Tasks", "Inbox"]
+
+
+        for (let i=0; i<projects.length; i++){
+            if(!(notOptions.includes(projects[i].getName()))){
+                let option = document.createElement('option');
+                option.value = projects[i].getName();
+                option.text = projects[i].getName();
+                option.classList.add('projectOption');
+                selectList.appendChild(option);
+            }
+        }
+    } 
 
     static showTaskError () {
         const popUp = document.getElementById('addTaskPopup');

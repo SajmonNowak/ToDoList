@@ -22,8 +22,8 @@ export default class Project {
         return this._tasks;
     }
 
-    getTask (task) {
-       return this.getTasks().find(element => element.getTitle() == task )
+    getTask (taskName) {
+       return this.getTasks().find(element => element.getTitle() == taskName )
     }
 
     addTask(task) {

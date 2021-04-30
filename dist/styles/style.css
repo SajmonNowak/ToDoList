@@ -265,6 +265,11 @@ header {
     text-decoration: line-through ;
 }
 
+.dueTask {
+    font-weight: bold;
+    color: var(--myRed);
+}
+
 /* Add Task */
 
 #addTaskPopup {
@@ -298,18 +303,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     left: 0px;
     margin: 0px;
     width: 100%;
-
-}
-input[type="date"]::-webkit-calendar-picker-indicator { 
-    position: absolute; left: 0; 
-}
+} 
 
 input::-webkit-datetime-edit {
-     position: relative; left: 15px; 
-    }
+     position: relative; left: 15px;
+}
 
 input::-webkit-datetime-edit-fields-wrapper { 
-    position: relative; left: 15px; 
+    position: relative; left: 15px;
 }
 
 
@@ -348,10 +349,41 @@ input::-webkit-datetime-edit-fields-wrapper {
     color: red;
 }
 
-.dueTask {
-    font-weight: bold;
-    color: var(--myRed);
+#projectInputField {
+    width: 250px;
+    display: flex;
 }
+
+div.selectDiv {
+    padding: 0px;
+    position: relative;
+    justify-content: space-between;
+}
+
+.selectDiv i {
+    position: absolute;
+    right: 10px;
+    z-index: -1;
+}
+
+.selectDiv select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    outline: none;
+}
+
+.selectDiv select {
+    color: var(--borderGrey);
+}
+
+
 
 /** ProjectList **/
 #projectLayoutDiv{
