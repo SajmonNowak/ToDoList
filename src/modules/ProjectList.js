@@ -26,4 +26,10 @@ export default class ProjectList {
     addProject(project){
         this._projects.push(project);
     }
+
+    deleteProject(projectName){
+        console.log(this.getProjects());
+        const projectIndex = this.getProjects().findIndex(element => element.getName() == projectName)
+        this.getProjects().splice(projectIndex, 1);
+    }
 }

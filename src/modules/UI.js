@@ -18,8 +18,7 @@ export default class UI {
         const cancelAddProjectButton = document.getElementById('cancelAddProjectBtn');
         const createProjectButton = document.getElementById('createProjectBtn');
         const doneItemsButton = document.getElementById('doneIcon');
-        const priorityInputDiv = document.getElementById('priorityInputDiv')
-        const deleteButton = document.getElementById('rightClickDelete');
+        const priorityInputDiv = document.getElementById('priorityInputDiv');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
@@ -34,7 +33,6 @@ export default class UI {
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
         weekButton.addEventListener('click', Coordinator.handleWeekListButton);
         priorityInputDiv.addEventListener('click', UI.addStarIcon);
-        deleteButton.addEventListener('click', Coordinator.deleteTask);
         
         window.addEventListener('click', () =>{
             document.getElementById('context-menu').classList.remove('active');
@@ -43,7 +41,7 @@ export default class UI {
 
     // ContextMenu
 
-    static openContextMenu (e){      
+    static openContextMenu (e){
         var contextElement = document.getElementById('context-menu');
 
         let menuPosition = UI.getPosition(e);
@@ -54,9 +52,12 @@ export default class UI {
         contextElement.classList.add('active');
     }
 
-    // Display selected Project
+    static initialiseContextButtons(target) {
+        const deleteButton = document.getElementById('rightClickDelete');
+        deleteButton.addEventListener('click', () => Coordinator.deleteTaskOrProject(target));
+    }
 
-    
+    // Display selected Project
 
     static showProject (projectName) {
         const projectToShow = Storage.getProjectList().getProject(projectName);
@@ -114,10 +115,11 @@ export default class UI {
         const div = document.createElement('div');
         div.classList.add('task');
         div.append(circle,taskContent, starDiv, deleteButton);
-        div.addEventListener('click', Coordinator.handleClickOnTask);
+        div.addEventListener('click', Coordinator.handleClickOnTask)
         div.addEventListener('contextmenu', e => {
             e.preventDefault();
             UI.openContextMenu(e);
+            UI.initialiseContextButtons(e.target);
         })
 
         if (isBefore(new Date(task.getDueDate()), startOfDay(new Date()))){
@@ -145,7 +147,12 @@ export default class UI {
         const deleteIcon = document.createElement('i');
         deleteIcon.classList.add('fas', 'fa-times', 'deleteIcon');
         const deleteBtn = UI.embedInDiv(deleteIcon, 'taskCancelButton');
-        deleteBtn.addEventListener('click', Coordinator.deleteTask);
+        deleteBtn.removeEventListener('click', Coordinator.handleClickOnTask);
+        deleteBtn.addEventListener('click', (e) => {
+            const taskName = e.target.parentNode.parentNode.querySelector('p').textContent;
+            Coordinator.deleteTask(taskName);
+            e.stopPropagation();
+        });
 
         return deleteBtn;
     }
@@ -355,6 +362,7 @@ export default class UI {
         projectDiv.addEventListener('contextmenu', e => {
             e.preventDefault();
             UI.openContextMenu(e);
+            UI.initialiseContextButtons(e.target);
         })
 
         return projectDiv;

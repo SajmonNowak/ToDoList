@@ -57,12 +57,25 @@ export default class Coordinator {
         return new Task (input.title, input.date, input.project, input.priority);
     }
     
-    static deleteTask(){
-        console.log(this);
-        const task = this.parentNode.querySelector('p').textContent;
-        const projectName = this.closest('main').querySelector('#listTitle').textContent;
-        Storage.deleteTask(projectName, task);
+    static deleteTask(taskName){
+        //const task = this.parentNode.querySelector('p').textContent;
+        const projectName = document.querySelector('#listTitle').textContent;
+        Storage.deleteTask(projectName, taskName);
         UI.showProject(projectName);
+    }
+
+    static deleteProject (projectName) {
+        Storage.deleteProject(projectName);
+        UI.showAllProjects();
+    }
+
+    static deleteTaskOrProject(Div) {
+        console.log(Div);
+        if (Div.classList.contains('task')){
+            Coordinator.deleteTask(Div.querySelector('p'));
+        } else {
+            Coordinator.deleteProject(Div.querySelector('p'));
+        }
     }
 
     static handleTodayListButton() {

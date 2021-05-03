@@ -48,4 +48,10 @@ export default class Storage {
         projectList.addProject(project);
         Storage.saveProjectList(projectList);
     }
+
+    static deleteProject (projectName){
+        const projectList = Storage.getProjectList();
+        projectList.deleteProject(projectName);
+        Storage.saveProjectList(projectList);
+    }
 }
