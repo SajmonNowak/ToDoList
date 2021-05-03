@@ -19,6 +19,7 @@ export default class UI {
         const createProjectButton = document.getElementById('createProjectBtn');
         const doneItemsButton = document.getElementById('doneIcon');
         const priorityInputDiv = document.getElementById('priorityInputDiv')
+        const deleteButton = document.getElementById('rightClickDelete');
         
         addTaskButton.addEventListener('click', UI.openAddTaskPopup);
         cancelAddTaskButton.addEventListener('click', UI.resetTaskInputs);
@@ -32,7 +33,8 @@ export default class UI {
         doneItemsButton.addEventListener('click', UI.openDoneToDosPage);
         todayButton.addEventListener('click', Coordinator.handleTodayListButton);
         weekButton.addEventListener('click', Coordinator.handleWeekListButton);
-        priorityInputDiv.addEventListener('click', UI.addStarIcon)
+        priorityInputDiv.addEventListener('click', UI.addStarIcon);
+        deleteButton.addEventListener('click', Coordinator.deleteTask);
         
         window.addEventListener('click', () =>{
             document.getElementById('context-menu').classList.remove('active');
@@ -85,8 +87,9 @@ export default class UI {
 
     static showToDoList(projectToShow){;
         UI.resetList();
+        const sortedProject = Coordinator.sortProject(projectToShow);
         for (let i=0; i< projectToShow.getTasks().length; i++){
-            const taskDiv = UI.createTaskDivs(projectToShow.getTasks()[i]);
+            const taskDiv = UI.createTaskDivs(sortedProject[i]);
             UI.displayTaskDiv(taskDiv);
         }
     }
@@ -261,11 +264,9 @@ export default class UI {
         const priorityDiv = document.getElementById('priorityInputDiv');
 
         const activeStars = priorityDiv.querySelectorAll('.activeStar');
-        console.log(activeStars.length);
         switch(activeStars.length) {
             
             case 0:
-                console.log('moin');
             const star1 = priorityDiv.querySelector('#star1');
             star1.classList.add('activeStar');
             break;

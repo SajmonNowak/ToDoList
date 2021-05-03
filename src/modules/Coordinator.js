@@ -45,7 +45,6 @@ export default class Coordinator {
         const projectName = this.closest('#toDoLayoutDiv').querySelector('#listTitle').textContent;
         
         UI.closeAddTaskPopup();
-        console.log(task);
         Storage.addTask(task.getProject(), task);
         UI.showProject(projectName);
     }
@@ -59,6 +58,7 @@ export default class Coordinator {
     }
     
     static deleteTask(){
+        console.log(this);
         const task = this.parentNode.querySelector('p').textContent;
         const projectName = this.closest('main').querySelector('#listTitle').textContent;
         Storage.deleteTask(projectName, task);
@@ -170,4 +170,17 @@ export default class Coordinator {
         }
         UI.showProject(openProjectName);
     }
+
+    static sortProject (project){
+        const tasks = project.getTasks();
+        const sortedArray = tasks.sort(
+            (a,b) => b.getPriority()- a.getPriority()||
+            (new Date (a.getDueDate()) > new Date(b.getDueDate()) ? 1:-1)
+        );
+        
+        return sortedArray;
+    }
+
+    
+ 
 }
