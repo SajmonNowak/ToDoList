@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Lato";
-  src: url("/dist/styles/Fonts/Lato/Lato-Regular.ttf");
+  src: url("Fonts/Lato/Lato-Regular.ttf");
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("/dist/styles/Fonts/Roboto/Roboto-Regular.ttf");
+  src: url("Fonts/Roboto/Roboto-Regular.ttf");
 }
 
 :root {
@@ -290,6 +290,7 @@ header {
   flex: 1;
   border: 1px solid;
   border-color: var(--borderGrey);
+  font-size: 16px;
 }
 
 #dateInput {
@@ -376,10 +377,17 @@ div.selectDiv {
   cursor: inherit;
   line-height: inherit;
   outline: none;
+  color: black;
+  font-size: 16px;
 }
 
-.selectDiv select {
-  color: var(--borderGrey);
+select:invalid, select option[value=""] {
+    color: var(--backgroundColor);
+}
+
+select option {
+    color: black;
+    font-size: 16px;
 }
 
 .taskPriorityInfo {
