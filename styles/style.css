@@ -1,475 +1,471 @@
 @font-face {
-    font-family: "Lato";
-    src: url("/dist/styles/Fonts/Lato/Lato-Regular.ttf");
+  font-family: "Lato";
+  src: url("/dist/styles/Fonts/Lato/Lato-Regular.ttf");
 }
 
 @font-face {
-    font-family: "Roboto";
-    src: url("/dist/styles/Fonts/Roboto/Roboto-Regular.ttf");
+  font-family: "Roboto";
+  src: url("/dist/styles/Fonts/Roboto/Roboto-Regular.ttf");
 }
 
 :root {
-    --borderGrey: #BFC0C0;
-    --backgroundColor: #F0F0F0;
-    --mainOrange: #E36414;
-    --secondOrange: #FB8B24;
-    --myRed: #9A031E;
-    --myBlue: #0F4C5C;
+  --borderGrey: #bfc0c0;
+  --backgroundColor: #f0f0f0;
+  --mainOrange: #e36414;
+  --secondOrange: #fb8b24;
+  --myRed: #9a031e;
+  --myBlue: #0f4c5c;
 }
 
 * {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 body {
-    font-family: "Roboto";
+  font-family: "Roboto";
 }
 
 p {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 h5 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 h4 {
-    font-size: 24px;
-   
+  font-size: 24px;
 }
 
 h3 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 h2 {
-    font-size: 36px;
-    font-family: "Lato";
+  font-size: 36px;
+  font-family: "Lato";
 }
 
 h1 {
-    font-size: 48px;
+  font-size: 48px;
 }
 
-h1, h2, h3, h4, h5 {
-    font-family: "Lato";
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Lato";
 }
 
 button {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 /* General */
 
 .contentIconDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid;
-    border-color: var(--borderGrey);
-    font-size: 20px;
-    width: 50px;
-    padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+  border-color: var(--borderGrey);
+  font-size: 20px;
+  width: 50px;
+  padding: 10px;
 }
 
 .activeLayout {
-    display: flex !important;
+  display: flex !important;
 }
 
 .activePopup {
-    display: flex !important;
+  display: flex !important;
 }
 
 .addButton {
-    display: flex;
-    border: none;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondOrange) ;
-    padding: 10px;
-    margin-top: 5px; 
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondOrange);
+  padding: 10px;
+  margin-top: 5px;
 }
 
 /* Context-Menu */
 
 #context-menu {
-    position: fixed;
-    display: none;
-    flex-direction: column;
-    border: 1px solid ;
-    z-index: 100;
-    width: 150px;
-    font-size: 18px;
-    background-color: var(--backgroundColor);
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  border: 1px solid;
+  z-index: 100;
+  width: 150px;
+  font-size: 18px;
+  background-color: var(--backgroundColor);
 }
 
 .contextItem {
- display: flex;
- padding: 10px;
+  display: flex;
+  padding: 10px;
 }
 
 .contextItem:hover {
-    background-color: var(--secondOrange) ;
+  background-color: var(--secondOrange);
 }
 
 .active {
-    display: flex !important;
+  display: flex !important;
 }
 
 /* Header */
 
 header {
-    background-color: var(--mainOrange);
-    position: sticky;
-    top:0;
-    display: flex;
-    width: 100%;
-    height: 10vh;
-    min-height: 60px;
-    z-index: 100;
+  background-color: var(--mainOrange);
+  position: sticky;
+  top: 0;
+  display: flex;
+  width: 100%;
+  height: 10vh;
+  min-height: 60px;
+  z-index: 100;
 }
 
 /* sidebar */
 
-
 #sidebar {
-    position: sticky;
-    top: 10vh;
-    height: 90vh;
-    min-width: 54px;
-    border-right: 1px solid;
-    background-color: var(--backgroundColor);
-    display: flex;
-    flex-direction: column;
+  position: sticky;
+  top: 10vh;
+  height: 90vh;
+  min-width: 54px;
+  border-right: 1px solid;
+  background-color: var(--backgroundColor);
+  display: flex;
+  flex-direction: column;
 }
 
 .sideBarDiv {
-    margin: 5px;
-    margin-top: 15px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin: 5px;
+  margin-top: 15px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sideBarIcon {
-    font-size:24px;
+  font-size: 24px;
 }
 
 .bottomBarIcon {
-    margin: auto;
+  margin: auto;
 }
 
 /* content */
 
 .maindiv {
-    display: flex;
-    height: auto;
-    position: relative;
+  display: flex;
+  height: auto;
+  position: relative;
 }
 
 #toDoLayoutDiv {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    padding: 0px 20px;
-
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0px 20px;
 }
 
 .toDoTopMenu {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 #removeToDosBtn {
-    border: none;
-    height: 40px;
-    position:relative;
-    width: auto;
-    
+  border: none;
+  height: 40px;
+  position: relative;
+  width: auto;
 }
 
 #removeToDosBtn:hover {
-    transition: all 0.5s;
-    padding-right: 30px;
+  transition: all 0.5s;
+  padding-right: 30px;
 }
 
-#removeToDosBtn::after{
-    content: "\f024";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    opacity: 0;
-    position:absolute;
-    left: 85%;
-        top: 31%;
-        right: 5%;
-        bottom: 0;
+#removeToDosBtn::after {
+  content: "\f024";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  opacity: 0;
+  position: absolute;
+  left: 85%;
+  top: 31%;
+  right: 5%;
+  bottom: 0;
 }
 
 #removeToDosBtn:hover::after {
-    opacity: 1;
-    transition: all 0.5s;
+  opacity: 1;
+  transition: all 0.5s;
 }
 
 .task {
-    display: flex;
-    font-size: 18px;
-    padding: 20px 0px;
-    border-bottom : 1px solid;
-    border-color: var(--borderGrey);
+  display: flex;
+  font-size: 18px;
+  padding: 20px 0px;
+  border-bottom: 1px solid;
+  border-color: var(--borderGrey);
 }
 
-.task:hover{
-    background-color:#F2F2F2;
+.task:hover {
+  background-color: #f2f2f2;
 }
 
 .task i {
-    margin-right: 16px;
-    font-size:20px;
+  margin-right: 16px;
+  font-size: 20px;
 }
 
 #taskDateDiv p {
-    margin-top: 5px;
-    font-size: 14px !important;
-    color: var(--myRed);
+  margin-top: 5px;
+  font-size: 14px !important;
+  color: var(--myRed);
 }
 
 #taskDateDiv p::before {
-    content: "\f133";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 400;
-    padding-right: 5px;
-    color: var(--myRed);
+  content: "\f133";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+  padding-right: 5px;
+  color: var(--myRed);
 }
 
 #taskCancelButton {
-    margin-left: auto;
-    margin-right: 5px;
-    width: 20px;
-    z-Index: 100;
+  margin-left: auto;
+  margin-right: 5px;
+  width: 20px;
+  z-index: 100;
 }
 
 .plusSign {
-    font-size: 20px;
-    margin-right: 16px;
-    
+  font-size: 20px;
+  margin-right: 16px;
 }
 
 .finished {
-    text-decoration: line-through ;
+  text-decoration: line-through;
 }
 
 .dueTask {
-    font-weight: bold;
-    color: var(--myRed);
+  font-weight: bold;
+  color: var(--myRed);
 }
 
 /* Add Task */
 
 #addTaskPopup {
-    margin-top: 10px;
-    display: none;
-    flex-direction: column;
-    width: 100%;
+  margin-top: 10px;
+  display: none;
+  flex-direction: column;
+  width: 100%;
 }
 
 .mainInputs {
-    display: flex;
-    height: 40px;
-
+  display: flex;
+  height: 40px;
 }
 
 #taskTextInput {
-    height: 40px;
-    height: 100%;
-    flex: 1;
-    border: 1px solid;
-    border-color: var(--borderGrey);
+  height: 40px;
+  height: 100%;
+  flex: 1;
+  border: 1px solid;
+  border-color: var(--borderGrey);
 }
 
 #dateInput {
-    position: relative;
-    width: 150px;
+  position: relative;
+  width: 150px;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    position: absolute;
-    left: 0px;
-    margin: 0px;
-    width: 100%;
-} 
+  position: absolute;
+  left: 0px;
+  margin: 0px;
+  width: 100%;
+}
 
 input::-webkit-datetime-edit {
-     position: relative; left: 15px;
+  position: relative;
+  left: 15px;
 }
 
-input::-webkit-datetime-edit-fields-wrapper { 
-    position: relative; left: 15px;
+input::-webkit-datetime-edit-fields-wrapper {
+  position: relative;
+  left: 15px;
 }
-
 
 .secondaryInputs {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 #priorityInputDiv {
-    width: 150px;
+  width: 150px;
 }
 #priorityInputDiv > i {
-    margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .inputButtonDiv {
-    margin-top: 10px;
-    display: flex;
-    
+  margin-top: 10px;
+  display: flex;
 }
 
 .inputButton {
-    width: 100px;
-    height: 40px;
-    margin-right: 20px;
-    border: none;
-    background-color: var(--backgroundColor);
+  width: 100px;
+  height: 40px;
+  margin-right: 20px;
+  border: none;
+  background-color: var(--backgroundColor);
 }
 
 #createTaskBtn {
-    background-color: var(--secondOrange);
+  background-color: var(--secondOrange);
 }
 
 #errorMessageDiv {
-    margin-top: 10px;
-    color: red;
+  margin-top: 10px;
+  color: red;
 }
 
 #projectInputField {
-    width: 250px;
-    display: flex;
+  width: 250px;
+  display: flex;
 }
 
 div.selectDiv {
-    padding: 0px;
-    position: relative;
-    justify-content: space-between;
+  padding: 0px;
+  position: relative;
+  justify-content: space-between;
 }
 
 .selectDiv i {
-    position: absolute;
-    right: 10px;
-    z-index: -1;
+  position: absolute;
+  right: 10px;
+  z-index: -1;
 }
 
 .selectDiv select {
-    appearance: none;
-    background-color: transparent;
-    border: none;
-    width: 100%;
-    height: 100%;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: inherit;
-    line-height: inherit;
-    outline: none;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  height: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+  outline: none;
 }
 
 .selectDiv select {
-    color: var(--borderGrey);
+  color: var(--borderGrey);
 }
 
 .taskPriorityInfo {
-    position: absolute;
-    right: 100px;
+  position: absolute;
+  right: 100px;
 }
 
 .task .taskInfoStar {
-    font-size: 16px ;
-    padding: 0px;
-    margin: 0px;
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .activeStar {
-    color: gold;
+  color: gold;
 }
 
 /** ProjectList **/
-#projectLayoutDiv{
-    margin-top: 20px;
-    width: 100%;
-    display:none;
-    flex-direction: column;
-    padding: 0 20px;
+#projectLayoutDiv {
+  margin-top: 20px;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  padding: 0 20px;
 }
 
 #projectListDiv {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .projectDiv {
-    display: flex;
-    font-size: 18px;
-    padding: 20px;
-    padding-left: 20px;
+  display: flex;
+  font-size: 18px;
+  padding: 20px;
+  padding-left: 20px;
 }
 
 .projectDiv .fa-circle {
-    font-size : 10px;
-    margin-right: 20px;
+  font-size: 10px;
+  margin-right: 20px;
 }
 
 .projectDiv:hover {
-    background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 
-#addProjectButton{
-    display: flex;
-    border: none;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--secondOrange) ;
-    padding: 10px;
-    margin-top: 5px; 
+#addProjectButton {
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--secondOrange);
+  padding: 10px;
+  margin-top: 5px;
 }
 
 #addProjectPopup {
-    display: none;
-    flex-direction: column;
-    margin-top: 10px;
-    width: 100%;
+  display: none;
+  flex-direction: column;
+  margin-top: 10px;
+  width: 100%;
 }
 
 #addProjectPopup > h4 {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 #projectNameInput {
-    height: 40px;
-    width: 100%;
-    border: 1px solid;
-    border-color: var(--borderGrey);
+  height: 40px;
+  width: 100%;
+  border: 1px solid;
+  border-color: var(--borderGrey);
 }
 
 #colorOption {
-    height: 40px;
-    margin-top: 10px;
-    border: 1px solid;
-    border-color: var(--borderGrey);
+  height: 40px;
+  margin-top: 10px;
+  border: 1px solid;
+  border-color: var(--borderGrey);
 }
 
 .addProjectButtons {
-    margin-top: 10px;
-    display: flex;
+  margin-top: 10px;
+  display: flex;
 }
 
 #createProjectBtn {
-    background-color: var(--secondOrange);
+  background-color: var(--secondOrange);
 }
-
-
